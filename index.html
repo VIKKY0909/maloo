@@ -2199,7 +2199,93 @@
       padding: 72px 0;
     }
 
-    /* ---- ABOUT SECTION ---- */
+    /* ---- ABOUT PAGE REVAMP ---- */
+    .about-hero {
+      position: relative;
+      height: 60vh;
+      min-height: 450px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: var(--brown);
+      color: white;
+      overflow: hidden;
+      margin-top: 72px;
+    }
+
+    .about-hero img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.45;
+    }
+
+    .about-hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      padding: 0 40px;
+    }
+
+    .about-hero h1 {
+      font-size: clamp(40px, 6vw, 72px);
+      margin-bottom: 20px;
+      font-family: 'Playfair Display', serif;
+      font-weight: 500;
+    }
+
+    .about-mission {
+      background: var(--white);
+      padding: 100px 20px;
+      text-align: center;
+    }
+
+    .about-mission-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(24px, 4vw, 36px);
+      color: var(--brown);
+      max-width: 900px;
+      margin: 0 auto;
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    .about-pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      padding: 40px 0;
+    }
+
+    .pillar-card {
+      text-align: center;
+      padding: 50px 30px;
+      background: var(--white);
+      border-radius: var(--r-lg);
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+    }
+    .pillar-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .pillar-icon {
+      font-size: 32px;
+      margin-bottom: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 80px;
+      height: 80px;
+      background: rgba(201,133,58,0.1);
+      border-radius: 50%;
+      color: var(--gold);
+    }
+    
     .about-section {
       background: var(--cream);
       overflow: hidden;
@@ -2307,9 +2393,12 @@
         grid-template-columns: 1fr;
         gap: 48px;
       }
-
       .about-img-main {
         width: 90%;
+      }
+      .about-pillars-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
       }
     }
 
@@ -3375,48 +3464,65 @@
   PAGE: ABOUT
 ==============================================================-->
   <div class="page" id="page-about">
-    <div class="page-header">
-      <h1>About Us</h1>
-      <p>The story behind India's premium bakery tools store.</p>
+    <div class="about-hero">
+      <img src="https://images.unsplash.com/photo-1556206079-747a7a424d3d?w=1800&q=80&auto=format" alt="About Maloo BakerKraft">
+      <div class="about-hero-content reveal">
+        <h1>Baking Dreams to Reality</h1>
+        <p style="font-size: 18px; opacity: 0.9;">India's most premium destination for professional bakery supplies and equipment.</p>
+      </div>
     </div>
-    <section class="section about-section">
+
+    <section class="about-mission">
+      <div class="container reveal">
+        <h3 class="section-eyebrow" style="margin-bottom: 30px;">Our Philosophy</h3>
+        <p class="about-mission-quote">"We believe that every baker, whether at home or in a commercial kitchen, deserves access to world-class tools. Baking is an art, and the right equipment is your brush."</p>
+      </div>
+    </section>
+
+    <section class="section about-section" style="padding-top:0;">
       <div class="container">
         <div class="about-layout">
           <div class="about-images">
-            <div class="about-img-main">
+            <div class="about-img-main reveal">
               <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&q=80&auto=format"
                 alt="Baker working with dough">
             </div>
-            <div class="about-img-sub magnetic">
+            <div class="about-img-sub magnetic reveal" style="transition-delay: 0.2s">
               <img src="https://images.unsplash.com/photo-1542841791-1925b030cb04?w=600&q=80&auto=format"
                 alt="Baking tools spread on table">
             </div>
           </div>
           <div class="about-content">
-            <div class="section-eyebrow">Our Story</div>
-            <h2>Passion for Baking, Delivered.</h2>
-            <p>What started as a small dream in a local kitchen has grown into India's most trusted destination for
-              premium bakery supplies. At Maloo BakerKraft, we believe that every great bake starts with the right
-              robust tools.</p>
-            <p>From the silkiest chocolate moulds to the sturdiest stainless steel nozzles, we source and craft products
-              that transform your baking from a hobby into an absolute art form.</p>
+            <div class="section-eyebrow reveal">Our Story</div>
+            <h2 class="reveal">Built by Bakers, For Bakers.</h2>
+            <p class="reveal">What started as a small dream to source the finest baking molds has evolved into a movement. At Maloo BakerKraft, our journey is intertwined with thousands of passionate bakers across India who rely on us to fuel their creativity.</p>
+            <p class="reveal">We don't just sell tools; we meticulously source, test, and curate equipment that brings precision and elegance to your craft. From the silkiest chocolate moulds to the sturdiest stainless steel nozzles, we are your silent partner in the kitchen.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-            <div class="about-features">
-              <div class="about-feature">
-                <div class="about-feature-icon">✨</div>
-                <div class="about-feature-text">
-                  <h4>Curated Quality</h4>
-                  <p>Every product is tested in real kitchens by expert bakers before reaching your hands.</p>
-                </div>
-              </div>
-              <div class="about-feature">
-                <div class="about-feature-icon">🚀</div>
-                <div class="about-feature-text">
-                  <h4>Swift Delivery</h4>
-                  <p>Dispatched within 24 hours. Safe, secure packaging guaranteed across India.</p>
-                </div>
-              </div>
-            </div>
+    <section class="section" style="background:var(--cream-dark)">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-eyebrow">The Maloo Promise</div>
+          <h2>Why India's Top Bakers Choose Us</h2>
+        </div>
+        <div class="about-pillars-grid">
+          <div class="pillar-card reveal">
+            <span class="pillar-icon">✨</span>
+            <h4 style="font-family:'DM Sans'; font-size:20px; margin-bottom:8px;">Uncompromised Quality</h4>
+            <p style="color:var(--brown-3); font-size:15px; line-height:1.6;">Every single product undergoes rigorous testing in commercial kitchens before it reaches our catalog. We only sell what we would use ourselves.</p>
+          </div>
+          <div class="pillar-card reveal" style="transition-delay: 0.1s">
+            <span class="pillar-icon">🚚</span>
+            <h4 style="font-family:'DM Sans'; font-size:20px; margin-bottom:8px;">Lightning Fast Dispatch</h4>
+            <p style="color:var(--brown-3); font-size:15px; line-height:1.6;">We know how crucial timing is for a baker. We ensure same-day dispatch and partner with premium couriers for safe, rapid transit.</p>
+          </div>
+          <div class="pillar-card reveal" style="transition-delay: 0.2s">
+            <span class="pillar-icon">💬</span>
+            <h4 style="font-family:'DM Sans'; font-size:20px; margin-bottom:8px;">Dedicated Support</h4>
+            <p style="color:var(--brown-3); font-size:15px; line-height:1.6;">Stuck with a nozzle size or need bulk pricing? Our baking experts are just a WhatsApp message away to assist you unconditionally.</p>
           </div>
         </div>
       </div>
@@ -4214,10 +4320,20 @@
       });
 
       // Batch reveal for grids
-      gsap.utils.toArray('.cats-grid, .products-grid, .stats-grid, .testimonials-grid, .insta-grid').forEach(grid => {
+      gsap.utils.toArray('.cats-grid, .products-grid, .stats-grid, .testimonials-grid, .insta-grid, .about-pillars-grid').forEach(grid => {
         gsap.fromTo(grid.children,
           { y: 40, opacity: 0 },
           { scrollTrigger: { trigger: grid, start: "top 85%" }, y: 0, opacity: 1, duration: 0.6, stagger: 0.08, ease: "back.out(1.2)" }
+        );
+      });
+
+      // Generic catch-all for other reveals
+      gsap.utils.toArray('.reveal:not(.cat-card):not(.product-card):not(.stat-card):not(.testimonial-card):not(.insta-item)').forEach(el => {
+        // Skip if it's already animated by a grid or specific trigger
+        if(el.closest('.about-pillars-grid') || el.classList.contains('about-img-main') || el.classList.contains('about-img-sub') || el.classList.contains('section-header')) return;
+        gsap.fromTo(el,
+          { y: 30, opacity: 0 },
+          { scrollTrigger: { trigger: el, start: "top 90%" }, y: 0, opacity: 1, duration: 0.7, ease: "power3.out" }
         );
       });
 
