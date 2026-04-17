@@ -2199,6 +2199,29 @@
       padding: 72px 0;
     }
 
+    /* ---- GENERIC PAGE HEADER ---- */
+    .page-header {
+      background: var(--cream-dark);
+      padding: 140px 20px 80px;
+      text-align: center;
+      margin-top: 72px; /* to account for fixed navbar */
+    }
+    
+    .page-header h1 {
+      font-size: clamp(36px, 5vw, 56px);
+      color: var(--brown);
+      margin-bottom: 16px;
+      font-family: 'Playfair Display', serif;
+      letter-spacing: -1px;
+    }
+
+    .page-header p {
+      font-size: 18px;
+      color: var(--brown-2);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
     /* ---- ABOUT PAGE REVAMP ---- */
     .about-hero {
       position: relative;
@@ -2268,6 +2291,7 @@
       box-shadow: var(--shadow-sm);
       transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
     }
+
     .pillar-card:hover {
       transform: translateY(-5px);
       box-shadow: var(--shadow-md);
@@ -2281,11 +2305,11 @@
       justify-content: center;
       width: 80px;
       height: 80px;
-      background: rgba(201,133,58,0.1);
+      background: rgba(201, 133, 58, 0.1);
       border-radius: 50%;
       color: var(--gold);
     }
-    
+
     .about-section {
       background: var(--cream);
       overflow: hidden;
@@ -2393,9 +2417,11 @@
         grid-template-columns: 1fr;
         gap: 48px;
       }
+
       .about-img-main {
         width: 90%;
       }
+
       .about-pillars-grid {
         grid-template-columns: 1fr;
         gap: 24px;
@@ -3465,17 +3491,20 @@
 ==============================================================-->
   <div class="page" id="page-about">
     <div class="about-hero">
-      <img src="https://images.unsplash.com/photo-1556206079-747a7a424d3d?w=1800&q=80&auto=format" alt="About Maloo BakerKraft">
+      <img src="https://images.unsplash.com/photo-1556206079-747a7a424d3d?w=1800&q=80&auto=format"
+        alt="About Maloo BakerKraft">
       <div class="about-hero-content reveal">
         <h1>Baking Dreams to Reality</h1>
-        <p style="font-size: 18px; opacity: 0.9;">India's most premium destination for professional bakery supplies and equipment.</p>
+        <p style="font-size: 18px; opacity: 0.9;">India's most premium destination for professional bakery supplies and
+          equipment.</p>
       </div>
     </div>
 
     <section class="about-mission">
       <div class="container reveal">
         <h3 class="section-eyebrow" style="margin-bottom: 30px;">Our Philosophy</h3>
-        <p class="about-mission-quote">"We believe that every baker, whether at home or in a commercial kitchen, deserves access to world-class tools. Baking is an art, and the right equipment is your brush."</p>
+        <p class="about-mission-quote">"We believe that every baker, whether at home or in a commercial kitchen,
+          deserves access to world-class tools. Baking is an art, and the right equipment is your brush."</p>
       </div>
     </section>
 
@@ -3495,8 +3524,12 @@
           <div class="about-content">
             <div class="section-eyebrow reveal">Our Story</div>
             <h2 class="reveal">Built by Bakers, For Bakers.</h2>
-            <p class="reveal">What started as a small dream to source the finest baking molds has evolved into a movement. At Maloo BakerKraft, our journey is intertwined with thousands of passionate bakers across India who rely on us to fuel their creativity.</p>
-            <p class="reveal">We don't just sell tools; we meticulously source, test, and curate equipment that brings precision and elegance to your craft. From the silkiest chocolate moulds to the sturdiest stainless steel nozzles, we are your silent partner in the kitchen.</p>
+            <p class="reveal">What started as a small dream to source the finest baking molds has evolved into a
+              movement. At Maloo BakerKraft, our journey is intertwined with thousands of passionate bakers across India
+              who rely on us to fuel their creativity.</p>
+            <p class="reveal">We don't just sell tools; we meticulously source, test, and curate equipment that brings
+              precision and elegance to your craft. From the silkiest chocolate moulds to the sturdiest stainless steel
+              nozzles, we are your silent partner in the kitchen.</p>
           </div>
         </div>
       </div>
@@ -3512,17 +3545,21 @@
           <div class="pillar-card reveal">
             <span class="pillar-icon">✨</span>
             <h4 style="font-family:'DM Sans'; font-size:20px; margin-bottom:8px;">Uncompromised Quality</h4>
-            <p style="color:var(--brown-3); font-size:15px; line-height:1.6;">Every single product undergoes rigorous testing in commercial kitchens before it reaches our catalog. We only sell what we would use ourselves.</p>
+            <p style="color:var(--brown-3); font-size:15px; line-height:1.6;">Every single product undergoes rigorous
+              testing in commercial kitchens before it reaches our catalog. We only sell what we would use ourselves.
+            </p>
           </div>
           <div class="pillar-card reveal" style="transition-delay: 0.1s">
             <span class="pillar-icon">🚚</span>
             <h4 style="font-family:'DM Sans'; font-size:20px; margin-bottom:8px;">Lightning Fast Dispatch</h4>
-            <p style="color:var(--brown-3); font-size:15px; line-height:1.6;">We know how crucial timing is for a baker. We ensure same-day dispatch and partner with premium couriers for safe, rapid transit.</p>
+            <p style="color:var(--brown-3); font-size:15px; line-height:1.6;">We know how crucial timing is for a baker.
+              We ensure same-day dispatch and partner with premium couriers for safe, rapid transit.</p>
           </div>
           <div class="pillar-card reveal" style="transition-delay: 0.2s">
             <span class="pillar-icon">💬</span>
             <h4 style="font-family:'DM Sans'; font-size:20px; margin-bottom:8px;">Dedicated Support</h4>
-            <p style="color:var(--brown-3); font-size:15px; line-height:1.6;">Stuck with a nozzle size or need bulk pricing? Our baking experts are just a WhatsApp message away to assist you unconditionally.</p>
+            <p style="color:var(--brown-3); font-size:15px; line-height:1.6;">Stuck with a nozzle size or need bulk
+              pricing? Our baking experts are just a WhatsApp message away to assist you unconditionally.</p>
           </div>
         </div>
       </div>
@@ -4330,7 +4367,7 @@
       // Generic catch-all for other reveals
       gsap.utils.toArray('.reveal:not(.cat-card):not(.product-card):not(.stat-card):not(.testimonial-card):not(.insta-item)').forEach(el => {
         // Skip if it's already animated by a grid or specific trigger
-        if(el.closest('.about-pillars-grid') || el.classList.contains('about-img-main') || el.classList.contains('about-img-sub') || el.classList.contains('section-header')) return;
+        if (el.closest('.about-pillars-grid') || el.classList.contains('about-img-main') || el.classList.contains('about-img-sub') || el.classList.contains('section-header')) return;
         gsap.fromTo(el,
           { y: 30, opacity: 0 },
           { scrollTrigger: { trigger: el, start: "top 90%" }, y: 0, opacity: 1, duration: 0.7, ease: "power3.out" }
