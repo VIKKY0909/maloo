@@ -1,0 +1,4428 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Maloo BakerKraft — India's premium bakery tools & accessories store. Moulds, nozzles, toppers & more delivered to your door.">
+  <title>Maloo BakerKraft — Premium Bakery Supplies</title>
+  <!-- GSAP for Animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap"
+    rel="stylesheet">
+  <style>
+    /*============================================================
+  RESET & BASE
+==============================================================*/
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #FDF6EC;
+      color: #2C1503;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+      font-family: 'Playfair Display', serif;
+      line-height: 1.2;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      border: none;
+      background: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    /*============================================================
+  CSS VARIABLES
+==============================================================*/
+    :root {
+      --cream: #FDF6EC;
+      --cream-dark: #F5EAD9;
+      --brown: #2C1503;
+      --brown-2: #4A2409;
+      --brown-3: #6B3A1F;
+      --gold: #C9853A;
+      --gold-2: #E0A055;
+      --gold-3: #F2C47E;
+      --rose: #F5E0D3;
+      --rose-2: #EEDDD4;
+      --white: #FFFFFF;
+      --black: #0D0705;
+      --shadow-sm: 0 2px 12px rgba(44, 21, 3, 0.07);
+      --shadow-md: 0 8px 32px rgba(44, 21, 3, 0.12);
+      --shadow-lg: 0 20px 60px rgba(44, 21, 3, 0.18);
+      --shadow-gold: 0 8px 32px rgba(201, 133, 58, 0.3);
+      --r-sm: 10px;
+      --r-md: 16px;
+      --r-lg: 24px;
+      --r-xl: 32px;
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+      --bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --max: 1240px;
+    }
+
+    /*============================================================
+  SCROLLBAR
+==============================================================*/
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--cream-dark);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--gold);
+      border-radius: 3px;
+    }
+
+    /*============================================================
+  SELECTION
+==============================================================*/
+    ::selection {
+      background: var(--gold-3);
+      color: var(--brown);
+    }
+
+    /*============================================================
+  UTILITIES
+==============================================================*/
+    .container {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    .section {
+      padding: 96px 0;
+    }
+
+    .section-sm {
+      padding: 60px 0;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+    }
+
+    /*============================================================
+  CUSTOM CURSOR
+==============================================================*/
+    .custom-cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: rgba(44, 21, 3, 0.4);
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.3s var(--bounce), height 0.3s var(--bounce), background 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      color: white;
+      opacity: 0;
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+    }
+
+    .custom-cursor.active {
+      width: 64px;
+      height: 64px;
+      background: var(--gold);
+    }
+
+    .custom-cursor.ring {
+      width: 48px;
+      height: 48px;
+      background: transparent;
+      border: 1.5px solid var(--gold);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+
+    /* Page transition overlay */
+    .page-transition {
+      position: fixed;
+      inset: 0;
+      background: var(--brown);
+      z-index: 10000;
+      transform: translateY(100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .page-transition svg {
+      width: 60px;
+      height: 60px;
+      fill: var(--gold);
+      animation: pulse 1s infinite alternate;
+    }
+
+    @keyframes pulse {
+      from {
+        transform: scale(0.9);
+        opacity: 0.8;
+      }
+
+      to {
+        transform: scale(1.1);
+        opacity: 1;
+      }
+    }
+
+    /*============================================================
+  NAVBAR
+==============================================================*/
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 900;
+      padding: 0 28px;
+      transition: all 0.4s var(--ease);
+    }
+
+    .navbar.solid {
+      background: rgba(253, 246, 236, 0.94);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(201, 133, 58, 0.1);
+      box-shadow: 0 4px 24px rgba(44, 21, 3, 0.06);
+    }
+
+    .nav-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 76px;
+    }
+
+    /* Logo */
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    .logo-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-3));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 4px 14px rgba(201, 133, 58, 0.35);
+      transition: transform 0.3s var(--bounce), box-shadow 0.3s var(--ease);
+    }
+
+    .logo:hover .logo-mark {
+      transform: rotate(-8deg) scale(1.1);
+      box-shadow: var(--shadow-gold);
+    }
+
+    .logo-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--brown);
+      letter-spacing: -0.4px;
+    }
+
+    .logo-name span {
+      color: var(--gold);
+    }
+
+    .logo-tagline {
+      font-size: 10px;
+      color: var(--brown-3);
+      font-weight: 500;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-top: 2px;
+    }
+
+    /* Nav Links */
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .nav-links a {
+      position: relative;
+      padding: 8px 14px;
+      font-size: 14.5px;
+      font-weight: 500;
+      color: var(--brown-3);
+      border-radius: var(--r-sm);
+      transition: all 0.25s var(--ease);
+    }
+
+    .nav-links a:hover {
+      color: var(--gold);
+      background: rgba(201, 133, 58, 0.06);
+    }
+
+    .nav-links a.active {
+      color: var(--gold);
+    }
+
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: 3px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 18px;
+      height: 2px;
+      border-radius: 2px;
+      background: var(--gold);
+    }
+
+    /* Nav Actions */
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-icon-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: var(--brown-3);
+      transition: all 0.25s var(--ease);
+      position: relative;
+      background: transparent;
+    }
+
+    .nav-icon-btn:hover {
+      background: rgba(201, 133, 58, 0.08);
+      color: var(--gold);
+      transform: scale(1.05);
+    }
+
+    .cart-badge-pill {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      background: var(--gold);
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      min-width: 17px;
+      height: 17px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--cream);
+      transition: transform 0.3s var(--bounce);
+    }
+
+    .cart-badge-pill.pop {
+      animation: pop 0.35s var(--bounce);
+    }
+
+    @keyframes pop {
+
+      0%,
+      100% {
+        transform: scale(1)
+      }
+
+      50% {
+        transform: scale(1.6)
+      }
+    }
+
+    .btn-cart-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 50px;
+      background: var(--brown);
+      color: var(--cream);
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.25s var(--ease);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-cart-nav::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--gold), var(--gold-2));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .btn-cart-nav:hover::before {
+      opacity: 1;
+    }
+
+    .btn-cart-nav>* {
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-cart-nav:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-gold);
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: background 0.25s ease;
+    }
+
+    .hamburger:hover {
+      background: rgba(201, 133, 58, 0.08);
+    }
+
+    .hamburger span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: var(--brown);
+      border-radius: 2px;
+      transition: all 0.35s var(--ease);
+      transform-origin: center;
+    }
+
+    .hamburger.open span:nth-child(1) {
+      transform: rotate(45deg) translate(3px, 3px);
+    }
+
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    .hamburger.open span:nth-child(3) {
+      transform: rotate(-45deg) translate(3px, -3px);
+    }
+
+    /* Mobile Fullscreen Nav */
+    .mobile-nav-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--cream);
+      z-index: 850;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s var(--ease);
+    }
+
+    .mobile-nav-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .mobile-nav-overlay a {
+      font-family: 'Playfair Display', serif;
+      font-size: 38px;
+      font-weight: 700;
+      color: var(--brown);
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(201, 133, 58, 0.1);
+      width: 80%;
+      text-align: center;
+      transition: color 0.25s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.4s ease, transform 0.4s ease, color 0.25s ease;
+    }
+
+    .mobile-nav-overlay.open a {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .mobile-nav-overlay.open a:nth-child(1) {
+      transition-delay: 0.05s;
+    }
+
+    .mobile-nav-overlay.open a:nth-child(2) {
+      transition-delay: 0.1s;
+    }
+
+    .mobile-nav-overlay.open a:nth-child(3) {
+      transition-delay: 0.15s;
+    }
+
+    .mobile-nav-overlay.open a:nth-child(4) {
+      transition-delay: 0.2s;
+    }
+
+    .mobile-nav-overlay.open a:nth-child(5) {
+      transition-delay: 0.25s;
+    }
+
+    .mobile-nav-overlay a:hover {
+      color: var(--gold);
+    }
+
+    /*============================================================
+  PAGES
+==============================================================*/
+    .page {
+      display: none;
+      padding-top: 76px;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    /*============================================================
+  ===== HOMEPAGE =====
+==============================================================*/
+
+    /* ---- HERO ---- */
+    .hero {
+      position: relative;
+      min-height: calc(100vh - 76px);
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: brightness(0.55) saturate(0.8);
+      transform: scale(1.05);
+      animation: heroZoom 12s ease-in-out infinite alternate;
+    }
+
+    @keyframes heroZoom {
+      from {
+        transform: scale(1);
+      }
+
+      to {
+        transform: scale(1.07);
+      }
+    }
+
+    .hero-bg-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg,
+          rgba(44, 21, 3, 0.75) 0%,
+          rgba(44, 21, 3, 0.4) 50%,
+          rgba(201, 133, 58, 0.15) 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 680px;
+      padding: 60px 28px 60px 8%;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(12px);
+      padding: 8px 18px;
+      border-radius: 50px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--gold-3);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 26px;
+      animation: fadeUp 0.8s var(--ease) both;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-content h1 {
+      font-size: clamp(38px, 5.5vw, 66px);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.08;
+      margin-bottom: 22px;
+      letter-spacing: -1px;
+      animation: fadeUp 0.8s 0.1s var(--ease) both;
+    }
+
+    .hero-content h1 em {
+      font-style: italic;
+      color: var(--gold-3);
+    }
+
+    .hero-content p {
+      font-size: clamp(16px, 1.8vw, 19px);
+      color: rgba(253, 246, 236, 0.82);
+      margin-bottom: 38px;
+      line-height: 1.6;
+      animation: fadeUp 0.8s 0.2s var(--ease) both;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      animation: fadeUp 0.8s 0.3s var(--ease) both;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s var(--ease);
+    }
+
+    .btn-gold {
+      padding: 16px 34px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-2));
+      color: white;
+      font-size: 15px;
+      box-shadow: 0 6px 20px rgba(201, 133, 58, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-gold::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--gold-2), var(--gold-3));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .btn-gold>* {
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-gold:hover::after {
+      opacity: 1;
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(201, 133, 58, 0.5);
+    }
+
+    .btn-ghost {
+      padding: 15px 32px;
+      border: 2px solid rgba(255, 255, 255, 0.6);
+      color: white;
+      font-size: 15px;
+      backdrop-filter: blur(4px);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: white;
+      transform: translateY(-3px);
+    }
+
+    /* Hero floating badges */
+    .hero-badges {
+      position: absolute;
+      right: 6%;
+      bottom: 20%;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      animation: fadeSlideLeft 1s 0.5s var(--ease) both;
+    }
+
+    @keyframes fadeSlideLeft {
+      from {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .hero-badge-card {
+      background: rgba(253, 246, 236, 0.12);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(253, 246, 236, 0.2);
+      border-radius: var(--r-md);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 200px;
+    }
+
+    .hero-badge-icon {
+      font-size: 26px;
+    }
+
+    .hero-badge-text strong {
+      font-size: 16px;
+      font-weight: 700;
+      color: white;
+      display: block;
+    }
+
+    .hero-badge-text span {
+      font-size: 12px;
+      color: rgba(253, 246, 236, 0.65);
+    }
+
+    /* Hero scroll indicator */
+    .hero-scroll {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: rgba(253, 246, 236, 0.5);
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      animation: fadeUp 1s 0.8s var(--ease) both;
+    }
+
+    .scroll-wheel {
+      width: 24px;
+      height: 38px;
+      border: 2px solid rgba(253, 246, 236, 0.3);
+      border-radius: 12px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 5px;
+    }
+
+    .scroll-dot {
+      width: 4px;
+      height: 8px;
+      background: var(--gold-3);
+      border-radius: 2px;
+      animation: scrollDot 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollDot {
+
+      0%,
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      50% {
+        transform: translateY(10px);
+        opacity: 0.3;
+      }
+    }
+
+    /* ---- MARQUEE STRIP ---- */
+    .marquee-strip {
+      background: linear-gradient(90deg, var(--brown), var(--brown-2));
+      padding: 18px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .marquee-track {
+      display: inline-flex;
+      animation: marquee 28s linear infinite;
+    }
+
+    @keyframes marquee {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    .marquee-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 32px;
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(253, 246, 236, 0.7);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .marquee-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    /* ---- STATS ---- */
+    .stats-section {
+      background: var(--white);
+      border-bottom: 1px solid rgba(201, 133, 58, 0.08);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      divide: 1;
+    }
+
+    .stat-item {
+      padding: 48px 28px;
+      text-align: center;
+      border-right: 1px solid rgba(201, 133, 58, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-item:last-child {
+      border-right: none;
+    }
+
+    .stat-item::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-3));
+      transform: scaleX(0);
+      transition: transform 0.5s var(--ease);
+      transform-origin: left;
+    }
+
+    .stat-item:hover::before {
+      transform: scaleX(1);
+    }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 800;
+      color: var(--brown);
+      letter-spacing: -2px;
+      line-height: 1;
+      margin-bottom: 8px;
+      transition: color 0.3s ease;
+    }
+
+    .stat-item:hover .stat-number {
+      color: var(--gold);
+    }
+
+    .stat-number span {
+      font-size: 28px;
+      color: var(--gold);
+    }
+
+    .stat-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--brown-3);
+      opacity: 0.7;
+    }
+
+    /* ---- SECTION HEADER ---- */
+    .section-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    .section-eyebrow {
+      display: inline-block;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      padding: 6px 16px;
+      background: rgba(201, 133, 58, 0.08);
+      border-radius: 50px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(28px, 3.5vw, 44px);
+      color: var(--brown);
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 14px;
+    }
+
+    .section-header p {
+      font-size: 16.5px;
+      color: var(--brown-3);
+      opacity: 0.65;
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ---- CATEGORY CARDS ---- */
+    .cats-bg {
+      background: var(--cream-dark);
+    }
+
+    .cats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .cat-card {
+      position: relative;
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      cursor: pointer;
+      aspect-ratio: 4/5;
+      background: var(--rose);
+      transition: transform 0.4s var(--bounce), box-shadow 0.4s var(--ease);
+      group: true;
+    }
+
+    .cat-card:hover {
+      transform: translateY(-8px) scale(1.01);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .cat-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s var(--ease), filter 0.4s ease;
+      filter: brightness(0.75) saturate(0.9);
+    }
+
+    .cat-card:hover .cat-card-img {
+      transform: scale(1.08);
+      filter: brightness(0.65) saturate(0.9);
+    }
+
+    .cat-card-body {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 24px 22px 22px;
+      background: linear-gradient(to top, rgba(44, 21, 3, 0.9) 0%, transparent 100%);
+    }
+
+    .cat-card-icon {
+      font-size: 28px;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .cat-card-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 2px;
+    }
+
+    .cat-card-count {
+      font-size: 12px;
+      color: var(--gold-3);
+      font-weight: 500;
+    }
+
+    .cat-card-arrow {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 36px;
+      height: 36px;
+      background: rgba(253, 246, 236, 0.15);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(253, 246, 236, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      color: white;
+      opacity: 0;
+      transform: scale(0.7);
+      transition: all 0.3s var(--bounce);
+    }
+
+    .cat-card:hover .cat-card-arrow {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* ---- PRODUCT CARDS ---- */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .product-card {
+      background: var(--white);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      border: 1px solid rgba(201, 133, 58, 0.06);
+      transition: all 0.4s var(--ease);
+      cursor: pointer;
+      position: relative;
+    }
+
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(201, 133, 58, 0.15);
+    }
+
+    /* Image Container */
+    .pc-img-wrap {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 3/2.8;
+    }
+
+    .pc-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s var(--ease), filter 0.4s ease;
+    }
+
+    .product-card:hover .pc-img-wrap img {
+      transform: scale(1.08);
+    }
+
+    .pc-img-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(44, 21, 3, 0);
+      transition: background 0.4s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .product-card:hover .pc-img-overlay {
+      background: rgba(44, 21, 3, 0.18);
+    }
+
+    .pc-quick-actions {
+      display: flex;
+      gap: 8px;
+      transform: translateY(16px);
+      opacity: 0;
+      transition: all 0.35s var(--bounce);
+    }
+
+    .product-card:hover .pc-quick-actions {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .pc-action-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: rgba(253, 246, 236, 0.95);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: var(--brown);
+      transition: all 0.25s var(--ease);
+      border: 1px solid rgba(201, 133, 58, 0.15);
+    }
+
+    .pc-action-btn:hover {
+      background: var(--gold);
+      color: white;
+      transform: scale(1.1);
+    }
+
+    .pc-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      padding: 4px 10px;
+      border-radius: 50px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      z-index: 1;
+    }
+
+    .badge-new {
+      background: var(--brown);
+      color: var(--gold-3);
+    }
+
+    .badge-sale {
+      background: var(--gold);
+      color: white;
+    }
+
+    .badge-hot {
+      background: #E25822;
+      color: white;
+    }
+
+    /* Card Body */
+    .pc-body {
+      padding: 18px 18px 20px;
+    }
+
+    .pc-cat {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    .pc-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 16.5px;
+      font-weight: 600;
+      color: var(--brown);
+      margin-bottom: 8px;
+      line-height: 1.25;
+    }
+
+    .pc-stars {
+      font-size: 12px;
+      color: #E8A51A;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .pc-stars span {
+      color: var(--brown-3);
+      opacity: 0.6;
+      font-size: 11px;
+    }
+
+    .pc-pricing {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .pc-price {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .pc-orig {
+      font-size: 13px;
+      color: #999;
+      text-decoration: line-through;
+    }
+
+    .pc-disc {
+      font-size: 11px;
+      font-weight: 700;
+      color: #27AE60;
+      background: rgba(39, 174, 96, 0.1);
+      padding: 2px 7px;
+      border-radius: 50px;
+    }
+
+    .pc-atc {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: var(--r-sm);
+      background: linear-gradient(135deg, var(--brown), var(--brown-2));
+      color: var(--cream);
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.3s var(--ease);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pc-atc::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--gold), var(--gold-2));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .pc-atc:hover::before {
+      opacity: 1;
+    }
+
+    .pc-atc>* {
+      position: relative;
+      z-index: 1;
+    }
+
+    .pc-atc:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-gold);
+    }
+
+    /* ---- FEATURED BANNER ---- */
+    .feature-banner {
+      position: relative;
+      border-radius: var(--r-xl);
+      overflow: hidden;
+      min-height: 380px;
+      display: flex;
+      align-items: center;
+    }
+
+    .feature-banner img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.5);
+      transition: transform 6s ease;
+    }
+
+    .feature-banner:hover img {
+      transform: scale(1.04);
+    }
+
+    .feature-banner-content {
+      position: relative;
+      z-index: 1;
+      padding: 56px 60px;
+      max-width: 560px;
+    }
+
+    .feature-banner-content h2 {
+      font-size: clamp(28px, 3vw, 44px);
+      color: white;
+      margin-bottom: 14px;
+      letter-spacing: -0.5px;
+    }
+
+    .feature-banner-content p {
+      color: rgba(253, 246, 236, 0.75);
+      font-size: 16px;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    /* ---- TESTIMONIALS ---- */
+    .testimonials-bg {
+      background: var(--white);
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .testimonial-card {
+      background: var(--cream);
+      border-radius: var(--r-lg);
+      padding: 30px 28px;
+      border: 1px solid rgba(201, 133, 58, 0.08);
+      transition: all 0.3s var(--ease);
+      position: relative;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(201, 133, 58, 0.2);
+    }
+
+    .testimonial-card::before {
+      content: '"';
+      position: absolute;
+      top: 16px;
+      right: 24px;
+      font-family: 'Playfair Display', serif;
+      font-size: 80px;
+      line-height: 1;
+      color: rgba(201, 133, 58, 0.1);
+      font-weight: 800;
+    }
+
+    .t-stars {
+      font-size: 14px;
+      color: #E8A51A;
+      margin-bottom: 14px;
+    }
+
+    .t-text {
+      font-size: 15px;
+      color: var(--brown-2);
+      line-height: 1.7;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .t-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .t-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(201, 133, 58, 0.15);
+    }
+
+    .t-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--brown);
+    }
+
+    .t-loc {
+      font-size: 12px;
+      color: var(--gold);
+    }
+
+    /* ---- INSTAGRAM FEED ---- */
+    .insta-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 4px;
+    }
+
+    .insta-item {
+      position: relative;
+      aspect-ratio: 1;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .insta-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s var(--ease), filter 0.4s ease;
+    }
+
+    .insta-item:hover img {
+      transform: scale(1.08);
+      filter: brightness(0.65);
+    }
+
+    .insta-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: white;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .insta-item:hover .insta-overlay {
+      opacity: 1;
+    }
+
+    .insta-handle {
+      text-align: center;
+      margin-top: 28px;
+      font-size: 15px;
+      color: var(--brown-3);
+    }
+
+    .insta-handle a {
+      color: var(--gold);
+      font-weight: 600;
+      transition: color 0.25s ease;
+    }
+
+    .insta-handle a:hover {
+      color: var(--gold-2);
+    }
+
+    /* ---- NEWSLETTER ---- */
+    .newsletter-section {
+      background: linear-gradient(135deg, var(--brown) 0%, var(--brown-2) 60%, rgba(201, 133, 58, 0.3) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .newsletter-section::before {
+      content: '🎂';
+      position: absolute;
+      font-size: 300px;
+      opacity: 0.03;
+      right: -40px;
+      top: -40px;
+      line-height: 1;
+    }
+
+    .newsletter-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .newsletter-inner h2 {
+      font-size: clamp(26px, 3vw, 40px);
+      color: var(--cream);
+      margin-bottom: 14px;
+    }
+
+    .newsletter-inner p {
+      color: rgba(253, 246, 236, 0.65);
+      font-size: 16px;
+      margin-bottom: 36px;
+      line-height: 1.6;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 50px;
+      padding: 6px 6px 6px 24px;
+      backdrop-filter: blur(12px);
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-size: 15px;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--cream);
+    }
+
+    .newsletter-form input::placeholder {
+      color: rgba(253, 246, 236, 0.4);
+    }
+
+    .newsletter-form button {
+      padding: 13px 28px;
+      border-radius: 50px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-2));
+      color: white;
+      font-size: 14.5px;
+      font-weight: 700;
+      transition: all 0.3s var(--ease);
+      white-space: nowrap;
+    }
+
+    .newsletter-form button:hover {
+      transform: scale(1.05);
+      box-shadow: var(--shadow-gold);
+    }
+
+    /* ---- FOOTER ---- */
+    .footer {
+      background: var(--black);
+      padding: 70px 0 28px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2.2fr 1fr 1fr 1.5fr;
+      gap: 48px;
+      margin-bottom: 56px;
+    }
+
+    .footer-brand .logo-name {
+      color: var(--cream);
+      font-size: 20px;
+    }
+
+    .footer-brand .logo-name span {
+      color: var(--gold);
+    }
+
+    .footer-brand p {
+      margin-top: 16px;
+      color: rgba(253, 246, 236, 0.45);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .social-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: rgba(253, 246, 236, 0.6);
+      transition: all 0.25s var(--ease);
+    }
+
+    .social-btn:hover {
+      background: var(--gold);
+      color: white;
+      border-color: var(--gold);
+      transform: translateY(-3px);
+    }
+
+    .footer h4 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: rgba(253, 246, 236, 0.35);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 20px;
+    }
+
+    .footer ul li {
+      margin-bottom: 11px;
+    }
+
+    .footer ul li a {
+      font-size: 14px;
+      color: rgba(253, 246, 236, 0.55);
+      transition: color 0.25s ease;
+    }
+
+    .footer ul li a:hover {
+      color: var(--gold);
+    }
+
+    .footer-contact-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 14px;
+    }
+
+    .fc-icon {
+      font-size: 16px;
+      margin-top: 1px;
+      flex-shrink: 0;
+    }
+
+    .fc-text {
+      font-size: 13.5px;
+      color: rgba(253, 246, 236, 0.5);
+      line-height: 1.5;
+    }
+
+    .fc-text strong {
+      color: rgba(253, 246, 236, 0.8);
+      font-weight: 600;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: rgba(253, 246, 236, 0.25);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-bottom a {
+      color: var(--gold);
+      transition: color 0.25s ease;
+    }
+
+    .footer-bottom a:hover {
+      color: var(--gold-2);
+    }
+
+    /*============================================================
+  ===== CATEGORY PAGE =====
+==============================================================*/
+    .cat-page-hero {
+      position: relative;
+      height: 240px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .cat-page-hero img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.45);
+    }
+
+    .cat-page-hero-content {
+      position: relative;
+      z-index: 1;
+      padding: 0 28px;
+      max-width: var(--max);
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: rgba(253, 246, 236, 0.5);
+      margin-bottom: 10px;
+    }
+
+    .breadcrumb a {
+      color: rgba(253, 246, 236, 0.5);
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .breadcrumb a:hover {
+      color: var(--gold);
+    }
+
+    .breadcrumb .sep {
+      opacity: 0.4;
+    }
+
+    .cat-page-hero-content h1 {
+      font-size: 40px;
+      color: white;
+      font-weight: 700;
+    }
+
+    .filter-row {
+      background: var(--white);
+      border-bottom: 1px solid rgba(201, 133, 58, 0.07);
+      padding: 16px 0;
+      position: sticky;
+      top: 76px;
+      z-index: 100;
+    }
+
+    .filter-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .filter-count {
+      font-size: 14px;
+      color: var(--brown-3);
+      font-weight: 500;
+    }
+
+    .filter-count strong {
+      color: var(--brown);
+    }
+
+    .filter-controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .filter-select,
+    .filter-input {
+      padding: 9px 16px;
+      border: 1px solid rgba(201, 133, 58, 0.15);
+      border-radius: var(--r-sm);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--brown);
+      background: var(--cream);
+      outline: none;
+      transition: border-color 0.25s ease;
+      cursor: pointer;
+    }
+
+    .filter-select:focus,
+    .filter-input:focus {
+      border-color: var(--gold);
+    }
+
+    .filter-input {
+      min-width: 220px;
+    }
+
+    .filter-input::placeholder {
+      color: var(--brown-3);
+      opacity: 0.5;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 48px 0 16px;
+    }
+
+    .page-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--r-sm);
+      border: 1px solid rgba(201, 133, 58, 0.15);
+      background: var(--white);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--brown-3);
+      transition: all 0.25s var(--ease);
+    }
+
+    .page-btn:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .page-btn.active {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: white;
+    }
+
+    /*============================================================
+  ===== PRODUCT DETAIL =====
+==============================================================*/
+    .pd-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 40px 28px 72px;
+    }
+
+    .pd-gallery {
+      position: sticky;
+      top: 96px;
+    }
+
+    .pd-main-img {
+      border-radius: var(--r-xl);
+      overflow: hidden;
+      aspect-ratio: 1;
+      margin-bottom: 14px;
+      position: relative;
+      background: var(--rose);
+    }
+
+    .pd-main-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s var(--ease);
+    }
+
+    .pd-main-img:hover img {
+      transform: scale(1.03);
+    }
+
+    .pd-main-img-zoom {
+      position: absolute;
+      bottom: 16px;
+      right: 16px;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: rgba(253, 246, 236, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .pd-main-img-zoom:hover {
+      background: var(--gold);
+      color: white;
+    }
+
+    .pd-thumbs {
+      display: flex;
+      gap: 10px;
+    }
+
+    .pd-thumb {
+      width: 72px;
+      height: 72px;
+      border-radius: var(--r-sm);
+      overflow: hidden;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: border-color 0.25s ease;
+      flex-shrink: 0;
+    }
+
+    .pd-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .pd-thumb.active {
+      border-color: var(--gold);
+    }
+
+    .pd-thumb:hover {
+      border-color: var(--gold-2);
+    }
+
+    .pd-info {
+      padding-top: 8px;
+    }
+
+    .pd-eyebrow {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+
+    .pd-name {
+      font-size: clamp(26px, 3vw, 38px);
+      color: var(--brown);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 14px;
+      letter-spacing: -0.5px;
+    }
+
+    .pd-rating-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .pd-stars-v {
+      font-size: 15px;
+      color: #E8A51A;
+    }
+
+    .pd-reviews {
+      font-size: 13px;
+      color: var(--brown-3);
+      opacity: 0.6;
+    }
+
+    .pd-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+
+    .pd-price-main {
+      font-size: 38px;
+      font-weight: 800;
+      color: var(--gold);
+      letter-spacing: -1px;
+    }
+
+    .pd-price-orig {
+      font-size: 20px;
+      color: #aaa;
+      text-decoration: line-through;
+      font-weight: 400;
+    }
+
+    .pd-saved {
+      font-size: 13px;
+      font-weight: 700;
+      color: #27AE60;
+      background: rgba(39, 174, 96, 0.1);
+      padding: 4px 10px;
+      border-radius: 50px;
+    }
+
+    .pd-tax-note {
+      font-size: 12px;
+      color: var(--brown-3);
+      opacity: 0.5;
+      margin-bottom: 24px;
+    }
+
+    .pd-desc {
+      font-size: 15.5px;
+      color: var(--brown-2);
+      line-height: 1.75;
+      opacity: 0.85;
+      margin-bottom: 28px;
+    }
+
+    .pd-divider {
+      height: 1px;
+      background: rgba(201, 133, 58, 0.1);
+      margin: 24px 0;
+    }
+
+    .pd-qty-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .pd-qty-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--brown);
+    }
+
+    .qty-ctrl {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      border: 1px solid rgba(201, 133, 58, 0.15);
+      border-radius: var(--r-sm);
+      overflow: hidden;
+    }
+
+    .qty-minus,
+    .qty-plus {
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: var(--gold);
+      font-weight: 700;
+      background: var(--cream);
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .qty-minus:hover,
+    .qty-plus:hover {
+      background: var(--gold);
+      color: white;
+    }
+
+    .qty-num {
+      width: 52px;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--brown);
+      background: white;
+      border: none;
+      border-left: 1px solid rgba(201, 133, 58, 0.12);
+      border-right: 1px solid rgba(201, 133, 58, 0.12);
+      pointer-events: none;
+    }
+
+    .pd-actions-col {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .btn-full {
+      width: 100%;
+      padding: 16px;
+      border-radius: var(--r-md);
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.3s var(--ease);
+    }
+
+    .btn-add-cart-main {
+      background: linear-gradient(135deg, var(--gold), var(--gold-2));
+      color: white;
+      box-shadow: 0 6px 20px rgba(201, 133, 58, 0.3);
+    }
+
+    .btn-add-cart-main:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(201, 133, 58, 0.45);
+    }
+
+    .btn-wishlist-main {
+      background: transparent;
+      border: 1.5px solid rgba(201, 133, 58, 0.2);
+      color: var(--brown-2);
+    }
+
+    .btn-wishlist-main:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: rgba(201, 133, 58, 0.04);
+    }
+
+    /* pd features */
+    .pd-features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .pd-feature-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      background: var(--cream);
+      border-radius: var(--r-sm);
+      border: 1px solid rgba(201, 133, 58, 0.08);
+    }
+
+    .pd-feature-icon {
+      font-size: 18px;
+    }
+
+    .pd-feature-text {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--brown-2);
+    }
+
+    /* Accordion */
+    .accordion {
+      border-top: 1px solid rgba(201, 133, 58, 0.1);
+    }
+
+    .acc-item {
+      border-bottom: 1px solid rgba(201, 133, 58, 0.1);
+    }
+
+    .acc-header {
+      width: 100%;
+      padding: 18px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--brown);
+      cursor: pointer;
+      transition: color 0.25s ease;
+    }
+
+    .acc-header:hover {
+      color: var(--gold);
+    }
+
+    .acc-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(201, 133, 58, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--gold);
+      transition: transform 0.3s var(--ease), background 0.3s ease;
+    }
+
+    .acc-item.open .acc-icon {
+      transform: rotate(45deg);
+      background: var(--gold);
+      color: white;
+      border-color: var(--gold);
+    }
+
+    .acc-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s var(--ease);
+    }
+
+    .acc-body-inner {
+      padding: 0 0 20px;
+      font-size: 14.5px;
+      line-height: 1.75;
+      color: var(--brown-2);
+      opacity: 0.8;
+    }
+
+    .acc-item.open .acc-body {
+      max-height: 400px;
+    }
+
+    /* Related */
+    .related-section {
+      background: var(--cream-dark);
+      padding: 72px 0;
+    }
+
+    /* ---- ABOUT SECTION ---- */
+    .about-section {
+      background: var(--cream);
+      overflow: hidden;
+    }
+
+    .about-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .about-images {
+      position: relative;
+    }
+
+    .about-img-main {
+      width: 80%;
+      border-radius: var(--r-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .about-img-sub {
+      position: absolute;
+      bottom: -30px;
+      right: 0;
+      width: 50%;
+      border-radius: var(--r-lg);
+      border: 8px solid var(--cream);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    .about-images img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s var(--ease);
+    }
+
+    .about-images:hover img {
+      transform: scale(1.05);
+    }
+
+    .about-content h2 {
+      font-size: clamp(32px, 4vw, 48px);
+      color: var(--brown);
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+
+    .about-content p {
+      font-size: 16.5px;
+      color: var(--brown-2);
+      line-height: 1.8;
+      opacity: 0.85;
+      margin-bottom: 20px;
+    }
+
+    .about-features {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 32px;
+    }
+
+    .about-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .about-feature-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: rgba(201, 133, 58, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .about-feature-text h4 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--brown);
+      margin-bottom: 4px;
+    }
+
+    .about-feature-text p {
+      font-size: 14px;
+      margin: 0;
+      line-height: 1.5;
+      color: var(--brown-3);
+    }
+
+    @media (max-width: 992px) {
+      .about-layout {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .about-img-main {
+        width: 90%;
+      }
+    }
+
+    /*============================================================
+  CART DRAWER
+==============================================================*/
+    .cart-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(44, 21, 3, 0.45);
+      backdrop-filter: blur(4px);
+      z-index: 1100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+
+    .cart-backdrop.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: min(400px, 100vw);
+      background: var(--cream);
+      z-index: 1200;
+      transform: translateX(100%);
+      transition: transform 0.45s var(--ease);
+      display: flex;
+      flex-direction: column;
+      box-shadow: -20px 0 60px rgba(44, 21, 3, 0.2);
+    }
+
+    .cart-drawer.open {
+      transform: translateX(0);
+    }
+
+    .cart-drawer-header {
+      padding: 24px 24px 20px;
+      border-bottom: 1px solid rgba(201, 133, 58, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .cart-drawer-header h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--brown);
+    }
+
+    .cart-close {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(201, 133, 58, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: var(--brown-3);
+      transition: all 0.25s ease;
+    }
+
+    .cart-close:hover {
+      background: var(--gold);
+      color: white;
+    }
+
+    .cart-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 24px;
+    }
+
+    .cart-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      text-align: center;
+      gap: 14px;
+    }
+
+    .cart-empty-icon {
+      font-size: 64px;
+      opacity: 0.5;
+    }
+
+    .cart-empty h4 {
+      font-size: 18px;
+      color: var(--brown);
+    }
+
+    .cart-empty p {
+      font-size: 14px;
+      color: var(--brown-3);
+      opacity: 0.6;
+    }
+
+    .cart-item {
+      display: flex;
+      gap: 14px;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(201, 133, 58, 0.08);
+      align-items: flex-start;
+      animation: slideIn 0.3s var(--ease);
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(20px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0)
+      }
+    }
+
+    .cart-item-img {
+      width: 70px;
+      height: 70px;
+      border-radius: var(--r-sm);
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 1px solid rgba(201, 133, 58, 0.1);
+    }
+
+    .cart-item-img-placeholder {
+      width: 70px;
+      height: 70px;
+      border-radius: var(--r-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+
+    .cart-item-info {
+      flex: 1;
+    }
+
+    .cart-item-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--brown);
+      margin-bottom: 4px;
+    }
+
+    .cart-item-cat {
+      font-size: 11px;
+      color: var(--gold);
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    .cart-item-price {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .cart-item-qty {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .ciq-btn {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      border: 1px solid rgba(201, 133, 58, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--gold);
+      font-weight: 700;
+      transition: all 0.2s ease;
+    }
+
+    .ciq-btn:hover {
+      background: var(--gold);
+      color: white;
+      border-color: var(--gold);
+    }
+
+    .ciq-num {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--brown);
+      min-width: 20px;
+      text-align: center;
+    }
+
+    .cart-item-remove {
+      font-size: 16px;
+      color: var(--brown-3);
+      opacity: 0.4;
+      transition: all 0.2s ease;
+      padding: 4px;
+    }
+
+    .cart-item-remove:hover {
+      opacity: 1;
+      color: #e74c3c;
+    }
+
+    .cart-footer {
+      padding: 20px 24px;
+      border-top: 1px solid rgba(201, 133, 58, 0.1);
+      background: var(--cream);
+    }
+
+    .cart-subtotal {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .cart-subtotal span {
+      font-size: 15px;
+      color: var(--brown-3);
+      font-weight: 500;
+    }
+
+    .cart-subtotal strong {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--gold);
+    }
+
+    .btn-checkout {
+      width: 100%;
+      padding: 16px;
+      border-radius: var(--r-md);
+      background: linear-gradient(135deg, var(--brown), var(--brown-2));
+      color: var(--cream);
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.3s var(--ease);
+      margin-bottom: 10px;
+    }
+
+    .btn-checkout:hover {
+      background: linear-gradient(135deg, var(--gold), var(--gold-2));
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-gold);
+    }
+
+    .cart-trust {
+      text-align: center;
+      font-size: 12px;
+      color: var(--brown-3);
+      opacity: 0.5;
+    }
+
+    /*============================================================
+  SEARCH OVERLAY
+==============================================================*/
+    .search-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(253, 246, 236, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 1100;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s var(--ease);
+    }
+
+    .search-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .search-close {
+      position: absolute;
+      top: 28px;
+      right: 28px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(201, 133, 58, 0.1);
+      color: var(--brown);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      transition: all 0.3s var(--ease);
+      border: none;
+      cursor: pointer;
+    }
+
+    .search-close:hover {
+      background: var(--gold);
+      color: white;
+      transform: rotate(90deg);
+    }
+
+    .search-content {
+      max-width: 800px;
+      width: 100%;
+      margin: 120px auto 0;
+      padding: 0 28px;
+    }
+
+    .search-input-wrap {
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid rgba(201, 133, 58, 0.2);
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 5vw, 56px);
+      color: var(--brown);
+      padding: 10px 0 20px;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    .search-input:focus {
+      border-color: var(--gold);
+    }
+
+    .search-input::placeholder {
+      color: rgba(44, 21, 3, 0.2);
+    }
+
+    .search-results {
+      margin-top: 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+      max-height: 50vh;
+      overflow-y: auto;
+      padding-bottom: 40px;
+    }
+
+    .search-result-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px;
+      border-radius: var(--r-md);
+      background: white;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .search-result-item:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .search-result-img {
+      width: 60px;
+      height: 60px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+
+    .search-result-info h4 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--brown);
+      margin-bottom: 4px;
+      line-height: 1.2;
+    }
+
+    .search-result-info p {
+      font-size: 13px;
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    /*============================================================
+  TOAST
+==============================================================*/
+    .toast-stack {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column-reverse;
+      gap: 10px;
+    }
+
+    .toast {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 20px;
+      background: var(--brown);
+      color: var(--cream);
+      border-radius: var(--r-md);
+      font-size: 14px;
+      font-weight: 500;
+      box-shadow: var(--shadow-lg);
+      min-width: 240px;
+      border-left: 3px solid var(--gold);
+      animation: toastIn 0.4s var(--bounce), toastOut 0.4s 2.4s var(--ease) forwards;
+    }
+
+    .toast-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    @keyframes toastIn {
+      from {
+        opacity: 0;
+        transform: translateX(50px) scale(0.9);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+      }
+    }
+
+    @keyframes toastOut {
+      to {
+        opacity: 0;
+        transform: translateX(50px) scale(0.9);
+      }
+    }
+
+    /*============================================================
+  SCROLL-TO-TOP
+==============================================================*/
+    .scroll-top {
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: var(--gold);
+      color: white;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-gold);
+      z-index: 888;
+      opacity: 0;
+      transform: translateY(16px) scale(0.8);
+      transition: all 0.35s var(--bounce);
+      pointer-events: none;
+    }
+
+    .scroll-top.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: all;
+    }
+
+    .scroll-top:hover {
+      transform: translateY(-4px) scale(1.08);
+      box-shadow: 0 16px 40px rgba(201, 133, 58, 0.45);
+    }
+
+    /*============================================================
+  GSAP Helper Classes
+==============================================================*/
+    .gsap-fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    .gsap-scale-in {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+
+    /*============================================================
+  RESPONSIVE
+==============================================================*/
+    @media (max-width: 1024px) {
+      .cats-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .products-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .stat-item:nth-child(2) {
+        border-right: none;
+      }
+
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .hero-badges {
+        display: none;
+      }
+
+      .insta-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .pd-layout {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .pd-gallery {
+        position: static;
+      }
+    }
+
+    @media (max-width: 768px) {
+
+      .nav-links,
+      .nav-actions {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .navbar {
+        padding: 0 20px;
+      }
+
+      .cats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+      }
+
+      .testimonials-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .insta-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .section {
+        padding: 64px 0;
+      }
+
+      .hero-content {
+        padding: 48px 20px;
+      }
+
+      .hero-content h1 {
+        letter-spacing: -0.5px;
+      }
+
+      .pd-features {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-banner-content {
+        padding: 36px 28px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .newsletter-form {
+        flex-direction: column;
+        border-radius: var(--r-lg);
+        padding: 16px;
+      }
+
+      .newsletter-form input {
+        padding: 10px 0;
+      }
+
+      .newsletter-form button {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .cats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+
+      .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+
+      .pc-body {
+        padding: 12px 12px 14px;
+      }
+
+      .pc-name {
+        font-size: 14px;
+      }
+
+      .pc-price {
+        font-size: 17px;
+      }
+
+      .pc-atc {
+        font-size: 12.5px;
+        padding: 10px;
+      }
+
+      .insta-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .hero-btns {
+        flex-direction: column;
+      }
+
+      .btn-gold,
+      .btn-ghost {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Custom Cursor -->
+  <div class="custom-cursor" id="customCursor"></div>
+
+  <!-- Page Transition Overlay -->
+  <div class="page-transition" id="pageTransition">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2L15 8L21 9L16.5 14L18 20L12 17L6 20L7.5 14L3 9L9 8L12 2Z" fill="currentColor" />
+    </svg>
+  </div>
+
+  <!-- Search Overlay -->
+  <div class="search-overlay" id="searchOverlay">
+    <button class="search-close" onclick="closeSearch()">✕</button>
+    <div class="search-content">
+      <div class="search-input-wrap">
+        <input type="text" class="search-input" id="globalSearch" placeholder="Search bakery tools..."
+          oninput="handleGlobalSearch(this.value)">
+      </div>
+      <div class="search-results" id="searchResults"></div>
+    </div>
+  </div>
+
+  <!--============================================================
+  NAVBAR
+==============================================================-->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <div class="logo" onclick="goTo('home')">
+        <div class="logo-mark">🎂</div>
+        <div>
+          <div class="logo-name">Maloo <span>BakerKraft</span></div>
+          <div class="logo-tagline">Premium Baking Supplies</div>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="#" class="active" id="navHome" onclick="goTo('home')">Home</a>
+        <a href="#" id="navShop" onclick="goTo('cat', 'All Products', 'all')">Shop</a>
+        <a href="#" id="navCats" onclick="goTo('categories')">Categories</a>
+        <a href="#" id="navAbout" onclick="goTo('about')">About</a>
+        <a href="#" onclick="scrollTo('footer-section')">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="nav-icon-btn magnetic" title="Search" onclick="openSearch()">🔍</button>
+        <button class="nav-icon-btn" title="Wishlist" onclick="toast('Wishlist coming soon! ❤️')">
+          🤍
+        </button>
+        <button class="btn-cart-nav" onclick="openCart()">
+          <span>🛒</span>
+          <span>Cart</span>
+          <span id="cartCount" class="cart-badge-pill">0</span>
+        </button>
+      </div>
+      <button class="hamburger" id="hamburger" onclick="toggleMobile()"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav-overlay" id="mobileNav">
+    <a onclick="goTo('home'); closeMobile()">Home</a>
+    <a onclick="goTo('cat','All Products','all'); closeMobile()">Shop</a>
+    <a onclick="goTo('categories'); closeMobile()">Categories</a>
+    <a onclick="goTo('about'); closeMobile()">About</a>
+    <a onclick="openCart(); closeMobile()">Cart 🛒</a>
+  </div>
+
+  <!--============================================================
+  CART DRAWER
+==============================================================-->
+  <div class="cart-backdrop" id="cartBackdrop" onclick="closeCart()"></div>
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-drawer-header">
+      <h3>Your Cart 🛒</h3>
+      <button class="cart-close" onclick="closeCart()">✕</button>
+    </div>
+    <div class="cart-body" id="cartBody"></div>
+    <div class="cart-footer" id="cartFooter" style="display:none">
+      <div class="cart-subtotal">
+        <span>Subtotal</span>
+        <strong id="cartTotal">₹0</strong>
+      </div>
+      <button class="btn-checkout" onclick="toast('Proceeding to checkout! 🎉')">
+        Proceed to Checkout →
+      </button>
+      <div class="cart-trust">🔒 Secure payment · Free shipping above ₹999</div>
+    </div>
+  </div>
+
+  <!--============================================================
+  TOAST STACK
+==============================================================-->
+  <div class="toast-stack" id="toastStack"></div>
+
+  <!-- Scroll to top -->
+  <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+  <!--============================================================
+  PAGE: HOME
+==============================================================-->
+  <div class="page active" id="page-home">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-bg">
+        <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=1800&q=85&auto=format"
+          alt="Beautiful layered cakes" loading="eager">
+        <div class="hero-bg-overlay"></div>
+      </div>
+      <div class="hero-content">
+        <div class="hero-pill">⭐ Trusted by 5,000+ Bakers Across India</div>
+        <h1>Everything Your Bakery Needs, <em>Delivered.</em></h1>
+        <p>Premium baking tools, moulds, toppers & accessories — handpicked for home bakers and professional bakery
+          owners across India.</p>
+        <div class="hero-btns">
+          <button class="btn btn-gold" onclick="goTo('cat','All Products','all')">Shop Now <span>→</span></button>
+          <button class="btn btn-ghost" onclick="goTo('home'); setTimeout(()=>scrollTo('categories'),200)">Browse
+            Categories</button>
+        </div>
+      </div>
+      <div class="hero-badges">
+        <div class="hero-badge-card">
+          <span class="hero-badge-icon">🚚</span>
+          <div class="hero-badge-text">
+            <strong>Free Shipping</strong>
+            <span>On orders above ₹999</span>
+          </div>
+        </div>
+        <div class="hero-badge-card">
+          <span class="hero-badge-icon">📦</span>
+          <div class="hero-badge-text">
+            <strong>1000+ Products</strong>
+            <span>Widest range in India</span>
+          </div>
+        </div>
+        <div class="hero-badge-card">
+          <span class="hero-badge-icon">💬</span>
+          <div class="hero-badge-text">
+            <strong>WhatsApp Support</strong>
+            <span>Quick help, always</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-scroll">
+        <div class="scroll-wheel">
+          <div class="scroll-dot"></div>
+        </div>
+        <span>Scroll</span>
+      </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee-strip">
+      <div class="marquee-track" id="marqueeTrack"></div>
+    </div>
+
+    <!-- STATS -->
+    <section class="stats-section">
+      <div class="stats-grid">
+        <div class="stat-item reveal">
+          <div class="stat-number"><span id="s1">0</span><span>+</span></div>
+          <div class="stat-label">Happy Bakers</div>
+        </div>
+        <div class="stat-item reveal" style="transition-delay:0.1s">
+          <div class="stat-number"><span id="s2">0</span><span>+</span></div>
+          <div class="stat-label">Products Available</div>
+        </div>
+        <div class="stat-item reveal" style="transition-delay:0.2s">
+          <div class="stat-number"><span id="s3">0</span><span>+</span></div>
+          <div class="stat-label">Cities Delivered</div>
+        </div>
+        <div class="stat-item reveal" style="transition-delay:0.3s">
+          <div class="stat-number"><span id="s4">0</span><span>★</span></div>
+          <div class="stat-label">Average Rating</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CATEGORIES (HOME) -->
+    <section class="section cats-bg" id="categories">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-eyebrow">Shop by Category</div>
+          <h2>Bake Like a Professional</h2>
+          <p>Everything you need, sorted perfectly</p>
+        </div>
+        <div class="cats-grid" id="catsGrid"></div>
+      </div>
+    </section>
+
+    <!-- NEW ARRIVALS -->
+    <section class="section" style="background:var(--cream)">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-eyebrow">Fresh Drops</div>
+          <h2>New Arrivals</h2>
+          <p>Handpicked additions that your baker's toolkit has been waiting for</p>
+        </div>
+        <div class="products-grid reveal" id="newArrivalsGrid"></div>
+      </div>
+    </section>
+
+    <!-- FEATURE BANNER -->
+    <section class="section" style="background:var(--cream-dark)">
+      <div class="container">
+        <div class="feature-banner reveal">
+          <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=1400&q=80&auto=format"
+            alt="Baking tools">
+          <div class="feature-banner-content">
+            <div class="section-eyebrow" style="background:rgba(255,255,255,0.15); color:var(--gold-3)">Exclusive Offer
+            </div>
+            <h2>Bulk Orders for Bakery Owners?</h2>
+            <p>Get special trade pricing, priority dispatch, and dedicated WhatsApp support. We're your logistics
+              partner, not just a store.</p>
+            <button class="btn btn-gold" onclick="toast('Our team will contact you shortly! 📞')">Get Bulk Pricing
+              →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BESTSELLERS -->
+    <section class="section" style="background:var(--white)" id="bestsellers">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-eyebrow">All-Time Favourites</div>
+          <h2>Best Sellers</h2>
+          <p>The products bakers across India swear by</p>
+        </div>
+        <div class="products-grid reveal" id="bestGrid"></div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="section testimonials-bg" id="testimonials">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-eyebrow">What Bakers Say</div>
+          <h2>Loved Across India</h2>
+          <p>Real words from real bakers who trust Maloo BakerKraft</p>
+        </div>
+        <div class="testimonials-grid">
+          <div class="testimonial-card reveal">
+            <div class="t-stars">★★★★★</div>
+            <p class="t-text">"I've been ordering my silicone moulds and nozzle sets from Maloo BakerKraft for over a
+              year now. The quality is excellent and delivery is always super fast. Highly recommend to every home
+              baker!"</p>
+            <div class="t-author">
+              <img class="t-avatar"
+                src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=200&q=80&auto=format"
+                alt="Priya Sharma">
+              <div>
+                <div class="t-name">Priya Sharma</div>
+                <div class="t-loc">🏙️ Mumbai · Home Baker</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card reveal" style="transition-delay:0.1s">
+            <div class="t-stars">★★★★★</div>
+            <p class="t-text">"The acrylic toppers and packing boxes from here are just gorgeous. My customers keep
+              asking where I get my packaging from. This shop has completely elevated my cake brand!"</p>
+            <div class="t-author">
+              <img class="t-avatar"
+                src="https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?w=200&q=80&auto=format"
+                alt="Ananya Kapoor">
+              <div>
+                <div class="t-name">Ananya Kapoor</div>
+                <div class="t-loc">🏙️ Bangalore · Cake Studio Owner</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card reveal" style="transition-delay:0.2s">
+            <div class="t-stars">★★★★★</div>
+            <p class="t-text">"Ordered the professional nozzle set and edible glitters. Both arrived within 3 days and
+              were exactly as described. The gold foil boxes are amazing quality. Will definitely order again!"</p>
+            <div class="t-author">
+              <img class="t-avatar"
+                src="https://images.unsplash.com/photo-1613336026275-d6d473084e85?w=200&q=80&auto=format"
+                alt="Ritu Jain">
+              <div>
+                <div class="t-name">Ritu Jain</div>
+                <div class="t-loc">🏙️ Jaipur · Dessert Blogger</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INSTAGRAM -->
+    <section class="section-sm" style="background:var(--cream-dark)">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-eyebrow">@maloobakerkraft</div>
+          <h2>Follow Our Baking Journey</h2>
+        </div>
+        <div class="insta-grid reveal" id="instaGrid"></div>
+        <div class="insta-handle"><a
+            onclick="toast('Follow us on Instagram for daily baking inspo! 📸')">@maloobakerkraft</a> · Tag us with
+          #MalooBakerKraft to be featured</div>
+      </div>
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section class="section newsletter-section">
+      <div class="container">
+        <div class="newsletter-inner reveal">
+          <div class="section-eyebrow" style="background:rgba(255,255,255,0.1);color:var(--gold-3)">Baker's Circle</div>
+          <h2>Get Baking Tips & Exclusive Deals</h2>
+          <p>Join 8,000+ bakers who get early access, product launches, and exclusive member discounts.</p>
+          <form class="newsletter-form" onsubmit="handleNewsletter(event)">
+            <input type="email" placeholder="Enter your email..." required>
+            <button type="submit">Subscribe Free →</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer" id="footer-section">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div class="logo-name">Maloo <span>BakerKraft</span></div>
+            <p>India's favourite destination for premium baking tools, moulds, toppers & accessories. Loved by home
+              bakers and professional bakeries since 2020.</p>
+            <div class="footer-social">
+              <button class="social-btn" onclick="toast('Follow us on Instagram! 📸')">📸</button>
+              <button class="social-btn" onclick="toast('Join us on Facebook! 👋')">📘</button>
+              <button class="social-btn" onclick="toast('Chat on WhatsApp! 💬')">💬</button>
+              <button class="social-btn" onclick="toast('Watch on YouTube! 🎬')">▶️</button>
+            </div>
+          </div>
+          <div>
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a onclick="goTo('home')">Home</a></li>
+              <li><a onclick="goTo('cat','All Products','all')">Shop All</a></li>
+              <li><a>About Us</a></li>
+              <li><a onclick="toast('Bulk pricing page coming soon!')">Bulk Orders</a></li>
+              <li><a>Blog</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Categories</h4>
+            <ul>
+              <li><a onclick="goTo('cat','Baking Moulds','moulds')">Baking Moulds</a></li>
+              <li><a onclick="goTo('cat','Cake Toppers','toppers')">Cake Toppers</a></li>
+              <li><a onclick="goTo('cat','Nozzles','nozzles')">Piping Nozzles</a></li>
+              <li><a onclick="goTo('cat','Packing Boxes','boxes')">Packing Boxes</a></li>
+              <li><a onclick="goTo('cat','Baking Tools','tools')">Baking Tools</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Contact Us</h4>
+            <div class="footer-contact-item">
+              <span class="fc-icon">📍</span>
+              <div class="fc-text"><strong>Maloo BakerKraft</strong><br>Ahmedabad, Gujarat — 380001</div>
+            </div>
+            <div class="footer-contact-item">
+              <span class="fc-icon">📞</span>
+              <div class="fc-text"><strong>+91 98765 XXXXX</strong></div>
+            </div>
+            <div class="footer-contact-item">
+              <span class="fc-icon">✉️</span>
+              <div class="fc-text">hello@maloobakerkraft.com</div>
+            </div>
+            <div class="footer-contact-item">
+              <span class="fc-icon">🕐</span>
+              <div class="fc-text">Mon – Sat, 10 AM – 7 PM</div>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2025 Maloo BakerKraft. All rights reserved.</span>
+          <span>Made with 🤎 for bakers by bakers</span>
+          <span><a>Privacy</a> · <a>Terms</a> · <a>Refunds</a></span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!--============================================================
+  PAGE: CATEGORIES LIST
+==============================================================-->
+  <div class="page" id="page-categories">
+    <div class="page-header">
+      <h1>All Categories</h1>
+      <p>Discover everything you need for your professional baking journey.</p>
+    </div>
+    <section class="section cats-bg">
+      <div class="container">
+        <div class="cats-grid" id="dedicatedCatsGrid"></div>
+      </div>
+    </section>
+  </div>
+
+  <!--============================================================
+  PAGE: ABOUT
+==============================================================-->
+  <div class="page" id="page-about">
+    <div class="page-header">
+      <h1>About Us</h1>
+      <p>The story behind India's premium bakery tools store.</p>
+    </div>
+    <section class="section about-section">
+      <div class="container">
+        <div class="about-layout">
+          <div class="about-images">
+            <div class="about-img-main">
+              <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&q=80&auto=format"
+                alt="Baker working with dough">
+            </div>
+            <div class="about-img-sub magnetic">
+              <img src="https://images.unsplash.com/photo-1542841791-1925b030cb04?w=600&q=80&auto=format"
+                alt="Baking tools spread on table">
+            </div>
+          </div>
+          <div class="about-content">
+            <div class="section-eyebrow">Our Story</div>
+            <h2>Passion for Baking, Delivered.</h2>
+            <p>What started as a small dream in a local kitchen has grown into India's most trusted destination for
+              premium bakery supplies. At Maloo BakerKraft, we believe that every great bake starts with the right
+              robust tools.</p>
+            <p>From the silkiest chocolate moulds to the sturdiest stainless steel nozzles, we source and craft products
+              that transform your baking from a hobby into an absolute art form.</p>
+
+            <div class="about-features">
+              <div class="about-feature">
+                <div class="about-feature-icon">✨</div>
+                <div class="about-feature-text">
+                  <h4>Curated Quality</h4>
+                  <p>Every product is tested in real kitchens by expert bakers before reaching your hands.</p>
+                </div>
+              </div>
+              <div class="about-feature">
+                <div class="about-feature-icon">🚀</div>
+                <div class="about-feature-text">
+                  <h4>Swift Delivery</h4>
+                  <p>Dispatched within 24 hours. Safe, secure packaging guaranteed across India.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!--============================================================
+  PAGE: CATEGORY
+==============================================================-->
+  <div class="page" id="page-cat">
+    <div class="cat-page-hero" id="catHero">
+      <img id="catHeroImg" src="" alt="">
+      <div class="cat-page-hero-content">
+        <div class="breadcrumb">
+          <a onclick="goTo('home')">Home</a>
+          <span class="sep">›</span>
+          <span id="catBreadcrumb">Category</span>
+        </div>
+        <h1 id="catTitle">Baking Moulds</h1>
+      </div>
+    </div>
+    <div class="filter-row">
+      <div class="filter-inner">
+        <div class="filter-count">Showing <strong id="catCount">12</strong> products</div>
+        <div class="filter-controls">
+          <select class="filter-select" id="catFilterSort" onchange="applyFilters()">
+            <option value="latest">Latest</option>
+            <option value="low">Price: Low to High</option>
+            <option value="high">Price: High to Low</option>
+            <option value="best">Best Selling</option>
+            <option value="rated">Highest Rated</option>
+          </select>
+          <input class="filter-input" type="text" id="catFilterSearch" placeholder="🔍  Search products..."
+            onkeyup="applyFilters()">
+        </div>
+      </div>
+    </div>
+    <div class="container" style="padding-top:44px; padding-bottom:20px">
+      <div class="products-grid" id="catProductsGrid"></div>
+      <div class="pagination">
+        <button class="page-btn active">1</button>
+        <button class="page-btn">2</button>
+        <button class="page-btn">3</button>
+        <button class="page-btn">…</button>
+        <button class="page-btn">8</button>
+      </div>
+    </div>
+  </div>
+
+  <!--============================================================
+  PAGE: PRODUCT DETAIL
+==============================================================-->
+  <div class="page" id="page-pd">
+    <div class="container">
+      <div class="breadcrumb" style="padding:24px 0 8px; color:var(--brown-3); opacity:0.7">
+        <a onclick="goTo('home')" style="color:var(--brown-3)">Home</a>
+        <span class="sep">›</span>
+        <a id="pdBreadCat" style="color:var(--brown-3); cursor:pointer">Category</a>
+        <span class="sep">›</span>
+        <span id="pdBreadName">Product</span>
+      </div>
+    </div>
+    <div class="pd-layout">
+      <!-- Gallery -->
+      <div class="pd-gallery">
+        <div class="pd-main-img">
+          <img id="pdMainImg" src="" alt="">
+          <div class="pd-main-img-zoom" onclick="toast('Zoom feature coming soon! 🔍')">🔍</div>
+        </div>
+        <div class="pd-thumbs" id="pdThumbs"></div>
+      </div>
+      <!-- Info -->
+      <div class="pd-info">
+        <div class="pd-eyebrow" id="pdCatLabel">Category</div>
+        <h1 class="pd-name" id="pdName">Product Name</h1>
+        <div class="pd-rating-row">
+          <span class="pd-stars-v" id="pdStars">★★★★★</span>
+          <span class="pd-reviews" id="pdReviews">(42 reviews)</span>
+        </div>
+        <div class="pd-price-row">
+          <div class="pd-price-main" id="pdPrice">₹499</div>
+          <div class="pd-price-orig" id="pdOrig">₹699</div>
+          <div class="pd-saved" id="pdSaved">29% off</div>
+        </div>
+        <div class="pd-tax-note">Inclusive of all taxes · Free shipping above ₹999</div>
+        <p class="pd-desc" id="pdDesc">Description here.</p>
+        <div class="pd-divider"></div>
+        <div class="pd-features">
+          <div class="pd-feature-item"><span class="pd-feature-icon">🚚</span><span class="pd-feature-text">Delivered in
+              3–7 days</span></div>
+          <div class="pd-feature-item"><span class="pd-feature-icon">↩️</span><span class="pd-feature-text">7-day easy
+              returns</span></div>
+          <div class="pd-feature-item"><span class="pd-feature-icon">✅</span><span class="pd-feature-text">Quality
+              guaranteed</span></div>
+          <div class="pd-feature-item"><span class="pd-feature-icon">🔒</span><span class="pd-feature-text">Secure
+              payment</span></div>
+        </div>
+        <div class="pd-qty-row">
+          <span class="pd-qty-label">Quantity</span>
+          <div class="qty-ctrl">
+            <button class="qty-minus" onclick="changeQty(-1)">−</button>
+            <input class="qty-num" id="qtyNum" value="1" readonly>
+            <button class="qty-plus" onclick="changeQty(1)">+</button>
+          </div>
+        </div>
+        <div class="pd-actions-col">
+          <button class="btn-full btn-add-cart-main" onclick="addToCartFromPD()">🛒 Add to Cart</button>
+          <button class="btn-full btn-wishlist-main" onclick="toast('Added to wishlist! ❤️')">♡ Add to Wishlist</button>
+        </div>
+        <div class="accordion">
+          <div class="acc-item open">
+            <button class="acc-header" onclick="toggleAcc(this)">Product Description <span
+                class="acc-icon">+</span></button>
+            <div class="acc-body">
+              <div class="acc-body-inner" id="accDesc"></div>
+            </div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-header" onclick="toggleAcc(this)">Specifications <span class="acc-icon">+</span></button>
+            <div class="acc-body">
+              <div class="acc-body-inner" id="accSpecs"></div>
+            </div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-header" onclick="toggleAcc(this)">Shipping & Returns <span
+                class="acc-icon">+</span></button>
+            <div class="acc-body">
+              <div class="acc-body-inner">
+                Dispatched within 24 hours. Delivery in 3–7 business days across India.<br><br>
+                Free shipping on orders above ₹999. Cash on Delivery available on orders below ₹5,000.<br><br>
+                <strong>Returns:</strong> 7-day hassle-free returns. Product must be unused, in original packaging.
+                Initiate return via WhatsApp.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related -->
+    <section class="related-section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-eyebrow">You May Also Like</div>
+          <h2>Related Products</h2>
+        </div>
+        <div class="products-grid" style="grid-template-columns:repeat(4,1fr)" id="relatedGrid"></div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    'use strict';
+    /*============================================================
+      DATA
+    ==============================================================*/
+    const CATS = [
+      {
+        id: 'moulds', name: 'Baking Moulds', icon: '🍰', count: '120+ items',
+        hero: 'https://images.unsplash.com/photo-1606890658317-7d14490b76fd?w=1400&q=80&auto=format',
+        desc: 'Premium silicone and metal moulds for perfect bakes every time.'
+      },
+      {
+        id: 'toppers', name: 'Cake Toppers', icon: '🎂', count: '85+ items',
+        hero: 'https://images.unsplash.com/photo-1535141192574-5d4897c12636?w=1400&q=80&auto=format',
+        desc: 'Stunning acrylic and fondant toppers for every celebration.'
+      },
+      {
+        id: 'nozzles', name: 'Nozzles', icon: '🧁', count: '60+ items',
+        hero: 'https://images.unsplash.com/photo-1550596334-7bb40a71b6bc?w=1400&q=80&auto=format',
+        desc: 'Professional piping nozzles for flawless decorations.'
+      },
+      {
+        id: 'boxes', name: 'Packing Boxes', icon: '📦', count: '95+ items',
+        hero: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&q=80&auto=format',
+        desc: 'Premium packaging that makes your baked goods shine.'
+      },
+      {
+        id: 'candles', name: 'Candles', icon: '🕯️', count: '45+ items',
+        hero: 'https://images.unsplash.com/photo-1607083206968-13611e3d76db?w=1400&q=80&auto=format',
+        desc: 'Elegant candles to light up every celebration.'
+      },
+      {
+        id: 'edible', name: 'Edible Products', icon: '🍫', count: '70+ items',
+        hero: 'https://images.unsplash.com/photo-1599599810769-bcde5a160d32?w=1400&q=80&auto=format',
+        desc: 'Food colours, glitters, fondant and edible decorations.'
+      },
+      {
+        id: 'tools', name: 'Baking Tools', icon: '🔪', count: '110+ items',
+        hero: 'https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=1400&q=80&auto=format',
+        desc: 'Essential tools every baker needs in their kitchen.'
+      },
+      {
+        id: 'stands', name: 'Cake Stands', icon: '🎪', count: '35+ items',
+        hero: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=1400&q=80&auto=format',
+        desc: 'Display your creations with style and elegance.'
+      },
+    ];
+
+    const PRODUCTS = [
+      {
+        id: 1, name: 'Silicone Rose Mould Set', cat: 'Baking Moulds', catId: 'moulds',
+        price: 499, original: 699,
+        img: 'https://images.unsplash.com/photo-1612203985729-70726954388c?w=600&q=80&auto=format',
+        imgs: ['https://images.unsplash.com/photo-1612203985729-70726954388c?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1606890658317-7d14490b76fd?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1535141192574-5d4897c12636?w=600&q=80&auto=format'],
+        badge: 'new', rating: 5, reviews: 42,
+        desc: 'Premium food-grade silicone mould with intricate rose patterns. Perfect for fondant, chocolate, soap, and resin crafts. Easy to demould and dishwasher safe.',
+        specs: '• Material: Food-grade silicone\n• Temperature: -40°C to 230°C\n• Oven, microwave & freezer safe\n• BPA free, non-toxic\n• Cavity count: 6 roses per sheet', icon: '🍰'
+      },
+      {
+        id: 2, name: 'Acrylic Birthday Topper Pack', cat: 'Cake Toppers', catId: 'toppers',
+        price: 349, original: 499,
+        img: 'https://images.unsplash.com/photo-1535141192574-5d4897c12636?w=600&q=80&auto=format',
+        imgs: ['https://images.unsplash.com/photo-1535141192574-5d4897c12636?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=600&q=80&auto=format'],
+        badge: 'hot', rating: 5, reviews: 67,
+        desc: 'Set of 6 stunning acrylic cake toppers with gold-mirror finish. Reusable, lightweight, and makes every cake Instagram-worthy. Perfect for birthday celebrations.',
+        specs: '• Material: Premium acrylic\n• Finish: Gold mirror\n• Quantity: 6 toppers per pack\n• Reusable & wipe-clean\n• Food-safe coating', icon: '🎂'
+      },
+      {
+        id: 3, name: 'Gold Foil Packing Boxes (12pc)', cat: 'Packing Boxes', catId: 'boxes',
+        price: 599, original: 799,
+        img: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&auto=format',
+        imgs: ['https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1607083206968-13611e3d76db?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1606890658317-7d14490b76fd?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1612203985729-70726954388c?w=600&q=80&auto=format'],
+        badge: 'sale', rating: 4, reviews: 38,
+        desc: 'Premium gold foil gift boxes for cakes, pastries & baked goods. Sturdy food-safe board with elegant satin ribbon ties. Set of 12 in assorted sizes.',
+        specs: '• Material: Food-safe SBS board\n• Finish: Gold hot-foil\n• Size: 6" × 6" × 4"\n• Pack of: 12 boxes\n• Ribbon: Included', icon: '📦'
+      },
+      {
+        id: 4, name: 'Professional Nozzle Set (24pc)', cat: 'Nozzles', catId: 'nozzles',
+        price: 899, original: 1299,
+        img: 'https://images.unsplash.com/photo-1550596334-7bb40a71b6bc?w=600&q=80&auto=format',
+        imgs: ['https://images.unsplash.com/photo-1550596334-7bb40a71b6bc?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1599599810769-bcde5a160d32?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1535141192574-5d4897c12636?w=600&q=80&auto=format'],
+        badge: 'hot', rating: 5, reviews: 112,
+        desc: 'Complete 24-piece professional stainless steel piping set. Includes open star, closed star, petal, leaf, ruffle and specialty tips. Comes with coupler, 3 piping bags & storage roll.',
+        specs: '• Material: Stainless steel 304\n• Pack: 24 nozzles\n• Includes: Coupler, 3 bags\n• Storage: Canvas roll included\n• Compatible: Standard couplers', icon: '🧁'
+      },
+      {
+        id: 5, name: 'Metallic Gold Candles (12pc)', cat: 'Candles', catId: 'candles',
+        price: 199, original: 299,
+        img: 'https://images.unsplash.com/photo-1607083206968-13611e3d76db?w=600&q=80&auto=format',
+        imgs: ['https://images.unsplash.com/photo-1607083206968-13611e3d76db?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1535141192574-5d4897c12636?w=600&q=80&auto=format'],
+        badge: 'new', rating: 5, reviews: 89,
+        desc: 'Elegant metallic gold birthday candles — 12 per pack. Drip-proof, long-burning and perfect for premium cake presentations. Burn time: ~4 minutes each.',
+        specs: '• Quantity: 12 candles\n• Height: 6.5 cm each\n• Burn time: ~4 minutes\n• Drip-proof wax\n• Finish: Metallic gold', icon: '🕯️'
+      },
+      {
+        id: 6, name: 'Fondant Impression Mat', cat: 'Baking Moulds', catId: 'moulds',
+        price: 449, original: 599,
+        img: 'https://images.unsplash.com/photo-1606890658317-7d14490b76fd?w=600&q=80&auto=format',
+        imgs: ['https://images.unsplash.com/photo-1606890658317-7d14490b76fd?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1612203985729-70726954388c?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1550596334-7bb40a71b6bc?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&auto=format'],
+        badge: null, rating: 4, reviews: 31,
+        desc: 'Large A4-sized silicone lace texture mat. Creates beautiful patterns on fondant and gum paste. Adds a professional, elegant finish to wedding and birthday cakes.',
+        specs: '• Size: A4 (21 × 30 cm)\n• Material: Food-grade silicone\n• Pattern: Lace / geometric\n• Dishwasher safe\n• Resin & fondant compatible', icon: '🍰'
+      },
+      {
+        id: 7, name: 'Palette Knife Set (3pc)', cat: 'Baking Tools', catId: 'tools',
+        price: 649, original: 849,
+        img: 'https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=600&q=80&auto=format',
+        imgs: ['https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1550596334-7bb40a71b6bc?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1599599810769-bcde5a160d32?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1607083206968-13611e3d76db?w=600&q=80&auto=format'],
+        badge: 'new', rating: 5, reviews: 76,
+        desc: 'Set of 3 stainless steel offset palette knives for smooth buttercream and ganache finishes. Angled blades with comfortable non-slip handles. A must-have in every baker\'s kit.',
+        specs: '• Blades: Stainless steel 420\n• Sizes: 6", 8", 10" offset\n• Handle: PP non-slip grip\n• Dishwasher safe\n• Pack: Set of 3', icon: '🔪'
+      },
+      {
+        id: 8, name: 'Cupcake Paper Liners (100pc)', cat: 'Packing Boxes', catId: 'boxes',
+        price: 249, original: 349,
+        img: 'https://images.unsplash.com/photo-1599599810769-bcde5a160d32?w=600&q=80&auto=format',
+        imgs: ['https://images.unsplash.com/photo-1599599810769-bcde5a160d32?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1535141192574-5d4897c12636?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1606890658317-7d14490b76fd?w=600&q=80&auto=format'],
+        badge: 'sale', rating: 5, reviews: 154,
+        desc: 'Premium greaseproof cupcake liners in assorted pastel colours. Oven-safe and perfectly sized for standard muffin pans. Pack of 100 in 10 gorgeous prints.',
+        specs: '• Quantity: 100 liners\n• Size: Standard (5cm base)\n• Oven safe: Up to 220°C\n• Greaseproof paper\n• Colours: 10 assorted prints', icon: '🧁'
+      },
+    ];
+
+    const BEST = [
+      {
+        id: 9, name: 'Turntable Cake Stand', cat: 'Baking Tools', catId: 'tools',
+        price: 1299, original: 1799,
+        img: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600&q=80&auto=format',
+        imgs: ['https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1535141192574-5d4897c12636?w=600&q=80&auto=format'],
+        badge: 'hot', rating: 5, reviews: 230,
+        desc: 'Professional 12" rotating cake turntable on a heavy-duty aluminium base. Smooth 360° rotation with locking mechanism. Non-slip base with rubber feet.',
+        specs: '• Diameter: 12" (30 cm)\n• Material: Cast aluminium\n• Weight capacity: 10 kg\n• Non-slip rubber base\n• 360° smooth rotation', icon: '🎪'
+      },
+      {
+        id: 10, name: 'Korean Nozzle Set (6pc)', cat: 'Nozzles', catId: 'nozzles',
+        price: 599, original: 899,
+        img: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80&auto=format',
+        imgs: ['https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1550596334-7bb40a71b6bc?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1606890658317-7d14490b76fd?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1612203985729-70726954388c?w=600&q=80&auto=format'],
+        badge: 'hot', rating: 5, reviews: 185,
+        desc: '6 large-format Korean buttercream flower nozzles for creating stunning petal, chrysanthemum, tulip, and rose piping designs. Stainless steel with smooth finish.',
+        specs: '• Quantity: 6 nozzles\n• Style: Korean buttercream\n• Material: Stainless steel\n• Size: Large format\n• Includes: Storage pouch', icon: '🧁'
+      },
+      {
+        id: 11, name: 'Edible Glitter Set (6 colours)', cat: 'Edible Products', catId: 'edible',
+        price: 449, original: 649,
+        img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&q=80&auto=format',
+        imgs: ['https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1535141192574-5d4897c12636?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1599599810769-bcde5a160d32?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1607083206968-13611e3d76db?w=600&q=80&auto=format'],
+        badge: 'new', rating: 5, reviews: 97,
+        desc: '6 luxurious edible glitter shades — Gold, Rose Gold, Silver, Champagne, Pearl & Rainbow. 100% food safe. Perfect for dusting cakes, chocolates and macarons.',
+        specs: '• Colours: 6 shades\n• Volume: 5g per jar\n• 100% edible, food-safe\n• Halal certified\n• Shelf life: 24 months', icon: '🍫'
+      },
+      {
+        id: 12, name: 'Acrylic Rolling Pin (9mm groove)', cat: 'Baking Tools', catId: 'tools',
+        price: 749, original: 999,
+        img: 'https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=600&q=80&auto=format',
+        imgs: ['https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1599599810769-bcde5a160d32?w=600&q=80&auto=format', 'https://images.unsplash.com/photo-1550596334-7bb40a71b6bc?w=600&q=80&auto=format'],
+        badge: 'sale', rating: 5, reviews: 143,
+        desc: 'Premium clear acrylic rolling pin with guide rings for perfectly even fondant thickness. 48 cm length, non-stick surface, includes two thickness rings (5mm & 9mm).',
+        specs: '• Length: 48 cm\n• Material: Crystal-clear acrylic\n• Guide rings: 5mm, 9mm\n• Non-stick surface\n• Easy clean — wipe with cloth', icon: '🔪'
+      },
+    ];
+
+    const CAT_PRODUCTS = {
+      moulds: ['Silicone Rose Mould Set', 'Fondant Impression Mat', '6-Cavity Dome Mould', 'Alphabet Mould', '3D Flower Mould', 'Bunny Silicone Mould', 'Geometric Shape Mould', 'Lollipop Mould', 'Heart Mould Set', 'Chocolate Bar Mould', 'Pinata Heart Mould', 'Tart Shell Mould'],
+      toppers: ['Acrylic Birthday Topper', 'Gold Happy Birthday', 'Mr & Mrs Wedding Topper', 'Butterfly Pack', 'Number Toppers', 'Floral Topper', 'Baby Shower Pack', 'Eid Mubarak Topper', 'Diwali Special', 'Anniversary Gold', 'Love Script Topper', 'Rainbow Unicorn'],
+      nozzles: ['Professional 24pc Set', 'Korean Nozzle 6pc', 'Leaf Nozzle Set', 'Grass Tip Nozzle', 'Open Star Nozzle', 'Petal Nozzle Set', 'Writing Tips 3pc', 'Basketweave Nozzle', 'Drop Flower Set', 'Sultan Tube Set', 'Coupler Set', 'Ball Tip Nozzle'],
+      boxes: ['Gold Foil Box 12pc', 'Cupcake Window Box', 'Macaron Gift Box', 'Brownie Packaging', 'Gold Cake Board', 'Dessert Cups 50pc', 'Cookie Bag 100pc', 'Premium Cake Box 10"', 'Mini Pastry Box', 'Gold Tissue Paper', 'Gold Ribbon Roll', 'Gift Tags 50pc'],
+      candles: ['Metallic Gold Candles', 'Spiral Rainbow Candles', 'Number Sparkler Candle', 'Fountain Candle Set', 'Taper Gold Candles', 'Musical Birthday Candle', 'Jumbo Number Candles', 'Rose Gold Candles', 'Pastel Candle Set', 'Sparkler Candles', 'Flameless LED Candles', 'Star-Shape Candles'],
+      edible: ['Edible Glitter Gold', 'Fondant White 1kg', 'Sprinkle Mix Rainbow', 'Edible Pearls 50g', 'Food Colour Gel 12pc', 'Lustre Dust Rose Gold', 'Edible Wafer Paper', 'Chocolate Compound', 'Sugar Pearls Assorted', 'Edible Gold Leaf', 'Edible Print Sheet', 'Cocoa Butter Colours'],
+      tools: ['Palette Knife Set', 'Turntable Stand', 'Measuring Cup Set', 'Acrylic Rolling Pin', 'Fondant Smoother', 'Silicon Baking Mat', 'Cake Leveler', 'Piping Bag 20pc', 'Bench Scraper Set', 'Digital Scale', 'Pastry Brush', 'Dough Cutter Set'],
+      stands: ['3-Tier Gold Stand', 'Acrylic Round Stand', 'Rotating Display', 'Dessert Table Set', 'Single Tier Gold', 'Crystal Cake Stand', 'Wooden Cake Board', 'Metal Cupcake Tower', 'Square Elegant Stand', 'Marble Effect Stand', 'Vintage Gold Stand', 'Mini Display Set'],
+      all: PRODUCTS.concat(BEST).map(p => p.name),
+    };
+
+    const CAT_IMGS = [
+      'https://images.unsplash.com/photo-1612203985729-70726954388c?w=600&q=80&auto=format',
+      'https://images.unsplash.com/photo-1535141192574-5d4897c12636?w=600&q=80&auto=format',
+      'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&auto=format',
+      'https://images.unsplash.com/photo-1550596334-7bb40a71b6bc?w=600&q=80&auto=format',
+      'https://images.unsplash.com/photo-1607083206968-13611e3d76db?w=600&q=80&auto=format',
+      'https://images.unsplash.com/photo-1606890658317-7d14490b76fd?w=600&q=80&auto=format',
+      'https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=600&q=80&auto=format',
+      'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600&q=80&auto=format',
+      'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80&auto=format',
+      'https://images.unsplash.com/photo-1599599810769-bcde5a160d32?w=600&q=80&auto=format',
+      'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&q=80&auto=format',
+      'https://images.unsplash.com/photo-1567571335375-a2de4f00ede8?w=600&q=80&auto=format',
+    ];
+
+    const PRICES = [
+      { p: 449, o: 599 }, { p: 299, o: 449 }, { p: 649, o: 849 }, { p: 199, o: 329 }, { p: 549, o: 749 },
+      { p: 399, o: 549 }, { p: 749, o: 999 }, { p: 249, o: 399 }, { p: 499, o: 699 }, { p: 179, o: 279 },
+      { p: 599, o: 849 }, { p: 329, o: 479 },
+    ];
+    const INSTA_IMGS = [
+      'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&q=80&auto=format',
+      'https://images.unsplash.com/photo-1535141192574-5d4897c12636?w=400&q=80&auto=format',
+      'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400&q=80&auto=format',
+      'https://images.unsplash.com/photo-1606890658317-7d14490b76fd?w=400&q=80&auto=format',
+      'https://images.unsplash.com/photo-1607083206968-13611e3d76db?w=400&q=80&auto=format',
+      'https://images.unsplash.com/photo-1599599810769-bcde5a160d32?w=400&q=80&auto=format',
+    ];
+    const MARQUEE_ITEMS = ['🚚 Free Shipping Above ₹999', '✅ 1000+ Products', '⭐ 5000+ Happy Bakers', '🔒 Secure Payments', '📦 Premium Packaging', '💬 WhatsApp Support', '↩️ 7-Day Returns', '🎁 Bulk Discounts Available'];
+
+    /*============================================================
+      CART STATE
+    ==============================================================*/
+    let cart = [];
+    let cartTotal = 0;
+
+    /*============================================================
+      RENDER: MARQUEE
+    ==============================================================*/
+    function buildMarquee() {
+      const double = [...MARQUEE_ITEMS, ...MARQUEE_ITEMS];
+      document.getElementById('marqueeTrack').innerHTML =
+        double.map(t => `<span class="marquee-item"><span class="marquee-dot"></span>${t}</span>`).join('');
+    }
+
+    /*============================================================
+      RENDER: CATEGORIES
+    ==============================================================*/
+    function buildCats() {
+      const html = CATS.map((c, i) => `
+    <div class="cat-card reveal" style="transition-delay:${i * 0.06}s" onclick="goTo('cat','${c.name}','${c.id}')">
+      <img class="cat-card-img" src="${c.hero}" alt="${c.name}" loading="lazy">
+      <div class="cat-card-body">
+        <span class="cat-card-icon">${c.icon}</span>
+        <div class="cat-card-name">${c.name}</div>
+        <div class="cat-card-count">${c.count}</div>
+      </div>
+      <div class="cat-card-arrow">→</div>
+    </div>
+  `).join('');
+
+      const homeGrid = document.getElementById('catsGrid');
+      if (homeGrid) homeGrid.innerHTML = html;
+
+      const catPageGrid = document.getElementById('dedicatedCatsGrid');
+      if (catPageGrid) catPageGrid.innerHTML = html;
+    }
+
+    /*============================================================
+      RENDER: PRODUCT CARD
+    ==============================================================*/
+    function productCard(p, idx) {
+      const disc = Math.round((1 - p.price / p.original) * 100);
+      const stars = '★'.repeat(Math.round(p.rating || 5)) + '☆'.repeat(5 - Math.round(p.rating || 5));
+      const badgeHtml = p.badge
+        ? `<div class="pc-badge badge-${p.badge}">${p.badge === 'new' ? 'New' : p.badge === 'sale' ? `${disc}% Off` : '🔥 Hot'}</div>`
+        : '';
+      return `
+    <div class="product-card reveal" style="transition-delay:${idx * 0.05}s" onclick="goTo('pd',null,null,${p.id})">
+      <div class="pc-img-wrap">
+        ${badgeHtml}
+        <img src="${p.img}" alt="${p.name}" loading="lazy">
+        <div class="pc-img-overlay">
+          <div class="pc-quick-actions">
+            <div class="pc-action-btn" onclick="event.stopPropagation();addToCartById(${p.id})" title="Add to cart">🛒</div>
+            <div class="pc-action-btn" onclick="event.stopPropagation();toast('Added to wishlist! ❤️')" title="Wishlist">❤️</div>
+            <div class="pc-action-btn" onclick="event.stopPropagation();goTo('pd',null,null,${p.id})" title="Quick view">👁️</div>
+          </div>
+        </div>
+      </div>
+      <div class="pc-body">
+        <div class="pc-cat">${p.cat || ''}</div>
+        <div class="pc-name">${p.name}</div>
+        <div class="pc-stars">${stars} <span>(${p.reviews || 42})</span></div>
+        <div class="pc-pricing">
+          <span class="pc-price">₹${p.price}</span>
+          <span class="pc-orig">₹${p.original}</span>
+          <span class="pc-disc">${disc}% Off</span>
+        </div>
+        <button class="pc-atc" onclick="event.stopPropagation();addToCartById(${p.id})"><span>🛒</span><span>Add to Cart</span></button>
+      </div>
+    </div>
+  `;
+    }
+
+    /*============================================================
+      RENDER: GRIDS
+    ==============================================================*/
+    function buildNewArrivals() {
+      document.getElementById('newArrivalsGrid').innerHTML = PRODUCTS.map((p, i) => productCard(p, i)).join('');
+    }
+    function buildBest() {
+      document.getElementById('bestGrid').innerHTML = BEST.map((p, i) => productCard(p, i)).join('');
+    }
+    function buildInsta() {
+      document.getElementById('instaGrid').innerHTML = INSTA_IMGS.map(u => `
+    <div class="insta-item">
+      <img src="${u}" alt="Maloo BakerKraft" loading="lazy">
+      <div class="insta-overlay">📸</div>
+    </div>
+  `).join('');
+    }
+
+    /*============================================================
+      RENDER: CATEGORY PAGE
+    ==============================================================*/
+    function buildCatPage(catName, catId) {
+      const catObj = CATS.find(c => c.id === catId) || CATS[0];
+      document.getElementById('catBreadcrumb').textContent = catName;
+      document.getElementById('catTitle').textContent = `${catObj.icon} ${catName}`;
+      document.getElementById('catHeroImg').src = catObj.hero;
+      document.getElementById('catHeroImg').alt = catName;
+
+      const names = CAT_PRODUCTS[catId] || CAT_PRODUCTS.all;
+
+      currentCatProducts = names.map((name, i) => {
+        const pr = PRICES[i % PRICES.length];
+        const icons = catObj ? catObj.icon : '🍰';
+        const p = {
+          id: 100 + i, name, cat: catName, catId,
+          price: pr.p, original: pr.o,
+          img: CAT_IMGS[i % CAT_IMGS.length],
+          imgs: [CAT_IMGS[i % CAT_IMGS.length], CAT_IMGS[(i + 1) % CAT_IMGS.length], CAT_IMGS[(i + 2) % CAT_IMGS.length], CAT_IMGS[(i + 3) % CAT_IMGS.length]],
+          badge: i < 3 ? ['new', 'hot', 'sale'][i] : null,
+          rating: 4 + Math.random(), reviews: 15 + Math.floor(Math.random() * 130),
+          desc: `Premium quality ${name.toLowerCase()} from Maloo BakerKraft. Trusted by home bakers and professional bakery owners across India. Made with the finest food-safe materials.`,
+          specs: `• Category: ${catName}\n• Brand: Maloo BakerKraft\n• Quality: Food-grade certified\n• Delivery: Pan-India\n• Returns: 7-day policy`,
+          icon: icons,
+          _temp: true,
+          date: Date.now() - (i * 100000)
+        };
+        tempPool[p.id] = p;
+        return p;
+      });
+
+      document.getElementById('catFilterSearch').value = '';
+      document.getElementById('catFilterSort').value = 'latest';
+      applyFilters();
+    }
+
+    const tempPool = {};
+    let currentCatProducts = [];
+
+    function applyFilters() {
+      const search = document.getElementById('catFilterSearch').value.toLowerCase();
+      const sort = document.getElementById('catFilterSort').value;
+
+      let filtered = currentCatProducts.filter(p => p.name.toLowerCase().includes(search) || p.desc.toLowerCase().includes(search));
+
+      if (sort === 'low') {
+        filtered.sort((a, b) => a.price - b.price);
+      } else if (sort === 'high') {
+        filtered.sort((a, b) => b.price - a.price);
+      } else if (sort === 'rated') {
+        filtered.sort((a, b) => b.rating - a.rating);
+      } else if (sort === 'best') {
+        filtered.sort((a, b) => b.reviews - a.reviews);
+      } else {
+        filtered.sort((a, b) => b.date - a.date);
+      }
+
+      document.getElementById('catCount').textContent = filtered.length;
+      const grid = document.getElementById('catProductsGrid');
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--brown-3); font-size:16px;">🔍 No products found. Try a different search.</div>`;
+      } else {
+        grid.innerHTML = filtered.map((p, i) => productCard(p, i)).join('');
+      }
+
+      if (typeof gsap !== 'undefined' && filtered.length > 0) {
+        gsap.killTweensOf(grid.children);
+        gsap.fromTo(grid.children,
+          { y: 20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.4, stagger: 0.05, ease: "power2.out", clearProps: "all" }
+        );
+      }
+    }
+
+    /*============================================================
+      RENDER: PRODUCT DETAIL
+    ==============================================================*/
+    let currentPD = null;
+    function buildPD(p) {
+      currentPD = p;
+      document.getElementById('pdBreadCat').textContent = p.cat;
+      document.getElementById('pdBreadCat').onclick = () => goTo('cat', p.cat, p.catId);
+      document.getElementById('pdBreadName').textContent = p.name;
+      document.getElementById('pdCatLabel').textContent = (p.cat || '').toUpperCase();
+      document.getElementById('pdName').textContent = p.name;
+
+      const disc = Math.round((1 - p.price / p.original) * 100);
+      const stars = '★'.repeat(Math.round(p.rating || 5)) + '☆'.repeat(5 - Math.round(p.rating || 5));
+      document.getElementById('pdStars').textContent = stars;
+      document.getElementById('pdReviews').textContent = `(${p.reviews || 42} reviews)`;
+      document.getElementById('pdPrice').textContent = `₹${p.price}`;
+      document.getElementById('pdOrig').textContent = `₹${p.original}`;
+      document.getElementById('pdSaved').textContent = `${disc}% off`;
+      document.getElementById('pdDesc').textContent = p.desc || `Premium quality ${p.name.toLowerCase()} from Maloo BakerKraft.`;
+      document.getElementById('accDesc').textContent = p.desc || ``;
+      document.getElementById('accSpecs').innerHTML = (p.specs || '').replace(/\n/g, '<br>');
+      document.getElementById('qtyNum').value = 1;
+
+      // Main image
+      document.getElementById('pdMainImg').src = p.img;
+      document.getElementById('pdMainImg').alt = p.name;
+
+      // Thumbnails
+      const thumbs = p.imgs || [p.img, p.img, p.img, p.img];
+      document.getElementById('pdThumbs').innerHTML = thumbs.map((u, i) => `
+    <div class="pd-thumb ${i === 0 ? 'active' : ''}" onclick="switchPDImg('${u}',this)">
+      <img src="${u}" alt="">
+    </div>
+  `).join('');
+
+      // Related
+      const related = [...PRODUCTS, ...BEST].filter(r => r.catId === p.catId && r.id !== p.id).slice(0, 4);
+      const fill = [...PRODUCTS, ...BEST].filter(r => r.id !== p.id);
+      const pool = related.length >= 4 ? related : [...related, ...fill].slice(0, 4);
+      document.getElementById('relatedGrid').innerHTML = pool.map((r, i) => productCard(r, i)).join('');
+    }
+
+    function switchPDImg(url, el) {
+      document.getElementById('pdMainImg').src = url;
+      document.querySelectorAll('.pd-thumb').forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    /*============================================================
+      CART
+    ==============================================================*/
+    function getProduct(id) {
+      return [...PRODUCTS, ...BEST].find(p => p.id === +id) || tempPool[+id];
+    }
+
+    function addToCartById(id) {
+      const p = getProduct(id);
+      if (!p) return;
+      const existing = cart.find(c => c.id === p.id);
+      if (existing) { existing.qty++; }
+      else { cart.push({ ...p, qty: 1 }); }
+      updateCartUI();
+      toast(`Added to cart: ${p.name.substring(0, 28)} 🛒`);
+      openCart();
+    }
+
+    function addToCartFromPD() {
+      if (!currentPD) return;
+      const qty = parseInt(document.getElementById('qtyNum').value) || 1;
+      const existing = cart.find(c => c.id === currentPD.id);
+      if (existing) { existing.qty += qty; }
+      else { cart.push({ ...currentPD, qty }); }
+      updateCartUI();
+      toast(`${qty}× ${currentPD.name.substring(0, 26)} added! 🛒`);
+      openCart();
+    }
+
+    function updateCartUI() {
+      const total = cart.reduce((s, c) => s + c.qty, 0);
+      cartTotal = cart.reduce((s, c) => s + (c.price * c.qty), 0);
+      const badge = document.getElementById('cartCount');
+      badge.textContent = total;
+      badge.classList.remove('pop');
+      void badge.offsetWidth;
+      if (total > 0) badge.classList.add('pop');
+
+      const body = document.getElementById('cartBody');
+      const footer = document.getElementById('cartFooter');
+
+      if (cart.length === 0) {
+        footer.style.display = 'none';
+        body.innerHTML = `<div class="cart-empty"><div class="cart-empty-icon">🛒</div><h4>Your cart is empty</h4><p>Add some delicious items!</p></div>`;
+        return;
+      }
+      footer.style.display = 'block';
+      document.getElementById('cartTotal').textContent = `₹${cartTotal}`;
+      body.innerHTML = cart.map((item, i) => `
+    <div class="cart-item">
+      <img class="cart-item-img" src="${item.img}" alt="${item.name}">
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-cat">${item.cat}</div>
+        <div class="cart-item-price">₹${item.price * item.qty}</div>
+        <div class="cart-item-qty">
+          <button class="ciq-btn" onclick="cartQty(${i},-1)">−</button>
+          <span class="ciq-num">${item.qty}</span>
+          <button class="ciq-btn" onclick="cartQty(${i},1)">+</button>
+        </div>
+      </div>
+      <button class="cart-item-remove" onclick="removeFromCart(${i})">✕</button>
+    </div>
+  `).join('');
+    }
+
+    function cartQty(idx, delta) {
+      cart[idx].qty = Math.max(1, cart[idx].qty + delta);
+      updateCartUI();
+    }
+    function removeFromCart(idx) {
+      cart.splice(idx, 1);
+      updateCartUI();
+      toast('Item removed from cart');
+    }
+    function openCart() { document.getElementById('cartDrawer').classList.add('open'); document.getElementById('cartBackdrop').classList.add('open'); updateCartUI(); }
+    function closeCart() { document.getElementById('cartDrawer').classList.remove('open'); document.getElementById('cartBackdrop').classList.remove('open'); }
+
+    /*============================================================
+      NAVIGATION & TRANSITION
+    ==============================================================*/
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+
+    let currentPage = 'home';
+    function goTo(page, catName, catId, productId) {
+      closeSearch(); // Ensure search overlay is closed reliably
+
+      if (typeof gsap !== 'undefined') {
+        const transition = document.getElementById('pageTransition');
+        gsap.to(transition, {
+          y: "0%", duration: 0.4, ease: "power3.inOut",
+          onComplete: () => switchPageVisuals(page, catName, catId, productId, transition)
+        });
+      } else {
+        switchPageVisuals(page, catName, catId, productId, null);
+      }
+    }
+
+    function switchPageVisuals(page, catName, catId, productId, transitionElem) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+
+      if (page === 'home') {
+        document.getElementById('page-home').classList.add('active');
+        document.getElementById('navHome').classList.add('active');
+      } else if (page === 'categories') {
+        document.getElementById('page-categories').classList.add('active');
+        document.getElementById('navCats').classList.add('active');
+      } else if (page === 'about') {
+        document.getElementById('page-about').classList.add('active');
+        document.getElementById('navAbout').classList.add('active');
+      } else if (page === 'cat') {
+        buildCatPage(catName || 'All Products', catId || 'all');
+        document.getElementById('page-cat').classList.add('active');
+        document.getElementById('navShop').classList.add('active');
+      } else if (page === 'pd') {
+        const p = getProduct(productId) || PRODUCTS[0];
+        buildPD(p);
+        document.getElementById('page-pd').classList.add('active');
+        document.getElementById('navShop').classList.add('active');
+      }
+
+      // Fix scroll position bug
+      requestAnimationFrame(() => {
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+      });
+      currentPage = page;
+
+      if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+
+      if (transitionElem) {
+        gsap.to(transitionElem, {
+          y: "-100%", duration: 0.4, delay: 0.1, ease: "power3.inOut",
+          onComplete: () => {
+            gsap.set(transitionElem, { y: "100%" });
+            initScrollTriggers();
+            if (page === 'home') animateCounters();
+          }
+        });
+      } else {
+        initScrollTriggers();
+      }
+    }
+
+    /*============================================================
+      QTY
+    ==============================================================*/
+    function changeQty(d) {
+      const el = document.getElementById('qtyNum');
+      let v = parseInt(el.value) + d;
+      if (v < 1) v = 1;
+      if (v > 99) v = 99;
+      el.value = v;
+    }
+
+    /*============================================================
+      ACCORDION
+    ==============================================================*/
+    function toggleAcc(btn) {
+      btn.parentElement.classList.toggle('open');
+    }
+
+    /*============================================================
+      TOAST
+    ==============================================================*/
+    function toast(msg, icon = '✓') {
+      const stack = document.getElementById('toastStack');
+      const t = document.createElement('div');
+      t.className = 'toast';
+      t.innerHTML = `<span class="toast-icon">${icon}</span><span>${msg}</span>`;
+      stack.appendChild(t);
+      setTimeout(() => t.remove(), 2900);
+    }
+
+    /*============================================================
+      MOBILE NAV
+    ==============================================================*/
+    function toggleMobile() {
+      document.getElementById('hamburger').classList.toggle('open');
+      document.getElementById('mobileNav').classList.toggle('open');
+      document.body.style.overflow = document.getElementById('mobileNav').classList.contains('open') ? 'hidden' : '';
+    }
+    function closeMobile() {
+      document.getElementById('hamburger').classList.remove('open');
+      document.getElementById('mobileNav').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    /*============================================================
+      SCROLL
+    ==============================================================*/
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('solid', window.scrollY > 60);
+      document.getElementById('scrollTop').classList.toggle('show', window.scrollY > 500);
+    });
+
+    function scrollTo(id) {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    /*============================================================
+      REVEAL ON SCROLL (GSAP ScrollTrigger)
+    ==============================================================*/
+    function triggerReveal() {
+      // Stubbed out for backward compatibility. GSAP handles real reveals.
+    }
+
+    function initScrollTriggers() {
+      if (typeof gsap === 'undefined') return;
+
+      // Batch reveal for section headers
+      gsap.utils.toArray('.section-header').forEach(header => {
+        gsap.fromTo(header,
+          { y: 40, opacity: 0 },
+          { scrollTrigger: { trigger: header, start: "top 85%" }, y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }
+        );
+      });
+
+      // Batch reveal for grids
+      gsap.utils.toArray('.cats-grid, .products-grid, .stats-grid, .testimonials-grid, .insta-grid').forEach(grid => {
+        gsap.fromTo(grid.children,
+          { y: 40, opacity: 0 },
+          { scrollTrigger: { trigger: grid, start: "top 85%" }, y: 0, opacity: 1, duration: 0.6, stagger: 0.08, ease: "back.out(1.2)" }
+        );
+      });
+
+      // Feature Banner Parallax
+      const featureImg = document.querySelector('.feature-banner img');
+      if (featureImg) {
+        gsap.fromTo(featureImg,
+          { yPercent: -15 },
+          { yPercent: 15, ease: "none", scrollTrigger: { trigger: ".feature-banner", start: "top bottom", end: "bottom top", scrub: true } }
+        );
+      }
+
+      gsap.fromTo('.feature-banner-content',
+        { y: 40, opacity: 0 },
+        { scrollTrigger: { trigger: ".feature-banner", start: "top 70%" }, y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }
+      );
+
+      // About Section Animations
+      gsap.fromTo('.about-img-main',
+        { x: -40, opacity: 0 },
+        { scrollTrigger: { trigger: '.about-section', start: "top 75%" }, x: 0, opacity: 1, duration: 0.8, ease: "power3.out" }
+      );
+      gsap.fromTo('.about-img-sub',
+        { y: 40, opacity: 0 },
+        { scrollTrigger: { trigger: '.about-section', start: "top 75%" }, y: 0, opacity: 1, duration: 0.8, delay: 0.2, ease: "power3.out" }
+      );
+      const aboutContent = document.querySelector('.about-content');
+      if (aboutContent) {
+        gsap.fromTo(aboutContent.children,
+          { y: 30, opacity: 0 },
+          { scrollTrigger: { trigger: '.about-section', start: "top 75%" }, y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "power3.out" }
+        );
+      }
+    }
+
+    /*============================================================
+      ANIMATED COUNTERS
+    ==============================================================*/
+    let countersAnimated = false;
+    function animateCounters() {
+      if (countersAnimated) return;
+      const targets = [{ id: 's1', end: 5000, dur: 2000 }, { id: 's2', end: 1000, dur: 1800 }, { id: 's3', end: 200, dur: 1600 }, { id: 's4', end: 4.9, dur: 1200, dec: 1 }];
+      targets.forEach(({ id, end, dur, dec }) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const start = Date.now();
+        const run = () => {
+          const p = Math.min((Date.now() - start) / dur, 1);
+          const ease = 1 - Math.pow(1 - p, 3);
+          const val = ease * end;
+          el.textContent = dec ? val.toFixed(dec) : Math.floor(val).toLocaleString('en-IN');
+          if (p < 1) requestAnimationFrame(run);
+        };
+        requestAnimationFrame(run);
+      });
+      countersAnimated = true;
+    }
+
+    /*============================================================
+      CUSTOM CURSOR & MAGNETIC LOGIC
+    ==============================================================*/
+    // Only init if gsap is loaded and device is not touch
+    if (typeof gsap !== 'undefined' && window.matchMedia("(pointer: fine)").matches) {
+      const cursor = document.getElementById('customCursor');
+      gsap.to(cursor, { opacity: 1, duration: 0.5 });
+
+      let mouseX = window.innerWidth / 2;
+      let mouseY = window.innerHeight / 2;
+      let cursorX = mouseX;
+      let cursorY = mouseY;
+
+      document.addEventListener('mousemove', e => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
+
+      // GSAP ticker for smooth trailing cursor
+      gsap.ticker.add(() => {
+        cursorX += (mouseX - cursorX) * 0.2;
+        cursorY += (mouseY - cursorY) * 0.2;
+        gsap.set(cursor, { x: cursorX, y: cursorY });
+      });
+
+      // Hover states for interactive elements
+      const interactions = 'a, button, .product-card, .cat-card, .search-result-item, .pd-main-img';
+      document.body.addEventListener('mouseenter', (e) => {
+        const el = e.target.closest && e.target.closest(interactions);
+        if (el) {
+          if (el.classList.contains('pd-main-img') || el.classList.contains('product-card')) {
+            cursor.classList.add('active');
+            cursor.textContent = 'VIEW';
+          } else if (el.classList.contains('cat-card') || el.classList.contains('search-result-item')) {
+            cursor.classList.add('active');
+            cursor.textContent = 'OPEN';
+          } else {
+            cursor.classList.add('ring');
+            cursor.textContent = '';
+          }
+        }
+      }, true);
+
+      document.body.addEventListener('mouseleave', (e) => {
+        const el = e.target.closest && e.target.closest(interactions);
+        if (el) {
+          cursor.classList.remove('active', 'ring');
+          cursor.textContent = '';
+        }
+      }, true);
+
+      // Magnetic Buttons
+      document.querySelectorAll('.magnetic').forEach(btn => {
+        btn.addEventListener('mousemove', e => {
+          const rect = btn.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+          gsap.to(btn, { x: x * 0.4, y: y * 0.4, duration: 0.3, ease: 'power2.out' });
+        });
+        btn.addEventListener('mouseleave', () => {
+          gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.3)' });
+        });
+      });
+    }
+
+    /*============================================================
+      GLOBAL SEARCH
+    ==============================================================*/
+    function openSearch() {
+      const overlay = document.getElementById('searchOverlay');
+      overlay.classList.add('open');
+      setTimeout(() => document.getElementById('globalSearch').focus(), 100);
+      handleGlobalSearch('');
+    }
+
+    function closeSearch() {
+      document.getElementById('searchOverlay').classList.remove('open');
+      document.getElementById('globalSearch').value = '';
+    }
+
+    function handleGlobalSearch(val) {
+      const resultsContainer = document.getElementById('searchResults');
+      if (val.length < 2) {
+        resultsContainer.innerHTML = '';
+        return;
+      }
+
+      const query = val.toLowerCase();
+      const pool = [...PRODUCTS, ...BEST];
+      const hits = [];
+      const seen = new Set();
+
+      for (const p of pool) {
+        if ((p.name.toLowerCase().includes(query) || p.cat.toLowerCase().includes(query)) && !seen.has(p.id)) {
+          hits.push(p);
+          seen.add(p.id);
+        }
+      }
+
+      if (hits.length === 0) {
+        resultsContainer.innerHTML = `<div style="grid-column:1/-1; color:var(--brown-3); padding-top:20px;">No results found for "${val}"</div>`;
+        return;
+      }
+
+      resultsContainer.innerHTML = hits.map(p => `
+        <div class="search-result-item" onclick="goTo('pd', null, null, ${p.id}); closeSearch();">
+          <img src="${p.img}" class="search-result-img" alt="${p.name}">
+          <div class="search-result-info">
+            <h4>${p.name.substring(0, 25)}${p.name.length > 25 ? '...' : ''}</h4>
+            <p>₹${p.price}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    /*============================================================
+      NEWSLETTER
+    ==============================================================*/
+    function handleNewsletter(e) {
+      e.preventDefault();
+      toast('🎉 You\'re subscribed! Welcome to the Baker\'s Circle!', '🎉');
+      e.target.reset();
+    }
+
+    /*============================================================
+      INIT
+    ==============================================================*/
+    buildMarquee();
+    buildCats();
+    buildNewArrivals();
+    buildBest();
+    buildInsta();
+    updateCartUI();
+
+    // Init GSAP
+    if (typeof gsap !== 'undefined') {
+      gsap.registerPlugin(ScrollTrigger);
+    }
+    setTimeout(initScrollTriggers, 150);
+
+    // Animate counters when stats section visible
+    const statsObs = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) { animateCounters(); statsObs.disconnect(); }
+    }, { threshold: 0.3 });
+    const statsEl = document.querySelector('.stats-section');
+    if (statsEl) statsObs.observe(statsEl);
+  </script>
+</body>
+
+</html>
